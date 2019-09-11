@@ -43,6 +43,9 @@ script:
 
   # Build API documentation
   - cd raml2markdown/
+  - ls
+  - ls node_modules
+  - ls node_modules/.bin
   - python build.py
   - cd ..
 
