@@ -11,12 +11,11 @@ from pathlib import Path
 # Inside that folder must be .raml file with the same name.
 # Example: ./src/product-api/product-api.raml
 APIS = [
-    "broker-api",
+    "acl-api",
     "calendar-api",
-    "context-api",
     "identity-api",
+    "management-api",
     "message-api",
-    "product-api",
 ]
 
 

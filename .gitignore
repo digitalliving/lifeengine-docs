@@ -31,3 +31,4 @@ doc/
 
 # Other build artifacts
 source/index.html.md
+raml2markdown/slate/*-api.md
