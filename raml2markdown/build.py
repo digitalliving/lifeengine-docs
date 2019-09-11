@@ -188,8 +188,8 @@ def copy_specs_to_build():
 
 
 def main():
-    os.makedirs("slate")
-    os.makedirs("OAS")
+    os.makedirs("slate", exist_ok=True)
+    os.makedirs("OAS", exist_ok=True)
 
     print(f"Reading examples from {os.environ['CODE_EXAMPLES']}")
 
