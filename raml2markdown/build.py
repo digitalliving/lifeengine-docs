@@ -33,7 +33,7 @@ def api_raml_to_slate(apiname):
         os.remove(slate_file)
 
     # Generate API docs. First convert RAML -> OpenAPISpec file
-    converter = "./node_nodules/.bin/oas-raml-converter"
+    converter = "./node_modules/.bin/oas-raml-converter"
     raml = f"./src/{apiname}/{apiname}.raml"
     cmd = f"{converter} --from RAML --to OAS20 {raml} > {json_file}"
 

@@ -19,6 +19,7 @@ env:
     # Specify location for code-examples-validator configuration.
     # https://github.com/PlatformOfTrust/code-examples-validator#configuration
     - VALIDATOR_CONF=$TRAVIS_BUILD_DIR/scripts/code-examples/validator_conf.yml
+    - PYTHONUNBUFFERED=1
 
 git:
   submodules: false
@@ -43,9 +44,6 @@ script:
 
   # Build API documentation
   - cd raml2markdown/
-  - ls
-  - ls node_modules
-  - ls node_modules/.bin
   - python build.py
   - cd ..
 
