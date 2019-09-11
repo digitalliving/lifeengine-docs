@@ -3,9 +3,6 @@ set -exuo pipefail
 
 bundle install
 
-# Set up Node
-nvm install $NODE_VERSION
-nvm alias default node
 
 # Prepare raml2markdown
 cd raml2markdown

@@ -25,6 +25,10 @@ git:
   submodules: false
 
 before_install:
+  # Set up Node
+  - nvm install $NODE_VERSION
+  - nvm alias default node
+  # Run setup script
   - bash setup.sh
 
 script:
