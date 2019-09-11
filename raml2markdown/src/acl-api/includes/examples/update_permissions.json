@@ -1,0 +1,6 @@
+{
+	"read": true,
+	"write": true,
+	"link": false,
+	"manage": false
+}
