@@ -5,7 +5,6 @@ bundle install
 
 # Prepare raml2markdown
 cd raml2markdown
-npm install
 
 git clone https://github.com/mulesoft/oas-raml-converter.git
 cd oas-raml-converter
@@ -14,6 +13,8 @@ npm install
 npm run build
 
 cd ..
+
+npm install -g swagger-to-slate
 
 # Fix running node via shebang on Linux - developers on macs are the worst
 sed -Ei 's@env node --harmony@env node@' node_modules/.bin/*
