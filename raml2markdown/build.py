@@ -19,6 +19,11 @@ APIS = [
 ]
 
 
+def run(cmd):
+    print(cmd)
+    return os.system(cmd)
+
+
 def api_raml_to_slate(apiname):
     json_file = Path("./OAS/" + apiname + ".json")
     slate_file = Path("./slate/" + apiname + ".md")
@@ -37,14 +42,14 @@ def api_raml_to_slate(apiname):
     raml = f"./src/{apiname}/{apiname}.raml"
     cmd = f"{converter} --from RAML --to OAS20 {raml} > {json_file}"
 
-    if os.system(cmd):
-        print("RAML -> OpenAPISpec failed. Trying next in array.")
+    if run(cmd):
+        raise Exception("RAML -> OpenAPISpec failed")
     else:
         # Convert from OpenAPISpec to Slate md
-        swagger_to_slate = "./node_modules/.bin/swagger-to-slate"
+        swagger_to_slate = "node node_modules/.bin/swagger-to-slate"
         slate_cmd = f"{swagger_to_slate} -i {json_file} -o {slate_file}"
-        if os.system(slate_cmd):
-            print("RAML -> Slate formatted md file creation failed.")
+        if run(slate_cmd):
+            raise Exception("RAML -> Slate formatted md file creation failed.")
 
 
 # Generate path according to code examples location pattern:
@@ -158,7 +163,7 @@ def concatenate_files(code_examples_path):
 
 def make_html():
     cmd = "cd .. & bundle exec middleman build"
-    if os.system(cmd):
+    if run(cmd):
         print("HTML build failed")
     else:
         print("\n\nHTML generated successfully.")
