@@ -9,5 +9,8 @@
     "commander": "^2.19.0",
     "swagger-to-slate": "^1.0.4"
   },
+  "scripts": {
+    "swagger-to-slate": "swagger-to-slate"
+  },
   "devDependencies": {}
 }

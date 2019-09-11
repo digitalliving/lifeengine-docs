@@ -46,7 +46,7 @@ def api_raml_to_slate(apiname):
         raise Exception("RAML -> OpenAPISpec failed")
     else:
         # Convert from OpenAPISpec to Slate md
-        swagger_to_slate = "node node_modules/.bin/swagger-to-slate"
+        swagger_to_slate = "npm run swagger-to-slate"
         slate_cmd = f"{swagger_to_slate} -i {json_file} -o {slate_file}"
         if run(slate_cmd):
             raise Exception("RAML -> Slate formatted md file creation failed.")
