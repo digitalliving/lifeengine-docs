@@ -10,6 +10,7 @@ npm install
 
 # Fix running node via shebang on Linux - developers on macs are the worst
 sed -Ei 's@env node --harmony@env node@' node_modules/.bin/*
+sed -Ei 's@env node --harmony@env node@' node_modules/oas-raml-converter/lib/bin/*
 
 cd ..
 
