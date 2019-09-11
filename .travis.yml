@@ -26,24 +26,24 @@ git:
 before_install:
   - nvm install $NODE_VERSION
   - nvm alias default node
-  - ./setup.sh
+  - bash setup.sh
 
 install:
    # Install all the dependencies required to
    # generate and validate code examples based
    # on API specification in `raml2markdown/src`.
-   - ./scripts/code-examples/install-deps.sh
+   - bash scripts/code-examples/install-deps.sh
 
 script:
   # Generate code examples from RAML files.
-  - ./scripts/code-examples/generate.sh
+  - bash scripts/code-examples/generate.sh
 
   # Validate code examples.
-  - ./scripts/code-examples/validate.sh || true  # Ignore result for now
+  - bash scripts/code-examples/validate.sh || true  # Ignore result for now
 
   # Build API documentation
   - cd raml2markdown/
-  - ./build.py
+  - python build.py
   - cd ..
 
   # Publish any keys if necessary
