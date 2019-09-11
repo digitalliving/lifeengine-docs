@@ -29,3 +29,5 @@ doc/
 \#*\#
 .\#*
 
+# Other build artifacts
+source/index.html.md

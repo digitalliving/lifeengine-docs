@@ -5,7 +5,7 @@ access_token: '$AUTH_TOKEN'
 substitutions:
   '{version}': 'v1'
   '<ACCESS_TOKEN>': '$AUTH_TOKEN'
-  'api-sandbox.oftrust.net': '$TESTING_API_URL'
+  'api-sandbox.lifeengine.io': '$TESTING_API_URL'
 
 resp_attr_replacements:
   'product-api/products/{version}':
