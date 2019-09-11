@@ -25,15 +25,7 @@ git:
   submodules: false
 
 before_install:
-  - nvm install $NODE_VERSION
-  - nvm alias default node
   - bash setup.sh
-
-install:
-   # Install all the dependencies required to
-   # generate and validate code examples based
-   # on API specification in `raml2markdown/src`.
-   - bash scripts/code-examples/install-deps.sh
 
 script:
   # Generate code examples from RAML files.
