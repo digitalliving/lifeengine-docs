@@ -17,7 +17,7 @@ cd ..
 npm install -g swagger-to-slate
 
 # Fix running node via shebang on Linux - developers on macs are the worst
-sed -Ei 's@env node --harmony@env node@' node_modules/.bin/*
+#sed -Ei 's@env node --harmony@env node@' node_modules/.bin/*
 sed -Ei 's@env node --harmony@env node@' oas-raml-converter/lib/bin/*
 
 cd ..
