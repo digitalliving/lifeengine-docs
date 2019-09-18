@@ -16,12 +16,32 @@ data:
   example: |
     {
       "name": "Example Application",
+      "description": "Description of application",
+      "privacyPolicyUrl": "http://example.com/privacy.html",
+      "iconUrl": "http://example.com/icon.png",
+      "webPageUrl": "http://example.com/application.html"
     }
   properties:
     name:
       description: The name of the app.
       type: string
       example: Example Application
+    description?:
+      description: The description of the app
+      type: string
+      example: Description for the application.
+    privacyPolicyUrl?:
+      description: The URL to the application privacy policy.
+      type: string
+      example: http://example.com/privacy.html
+    iconUrl?:
+      description: Optional URL to an icon to show for the application. Dimensions should be 80x80.
+      type: string
+      example: http://example.com/icon.png
+    webPageUrl?:
+      description: Optional URL to the application's web page.
+      type: string
+      example: http://example.com/application.html
 metadata:
   description: |
     Metadata about the app, such as when it was created/updated and who
@@ -91,3 +111,76 @@ outLinks:
         }
       }
     ]
+client:
+  description: The OAuth client information
+  type: object
+  example: |
+    {
+      "clientId": "6601afe9-85e4-4fe8-a3c9-1329f15493e1",
+      "clientSecrets": ["Sw4gT3I0oUynpeTN6YGfvFPE8SPj5LC1YNIHfFCF25w"],
+      "scopes": "",
+      "redirectUris": "https://example.com/auth-callback",
+      "defaultScopes": "",
+      "defaultRedirectUri": "https://example.com/auth-callback"
+    }
+  properties:
+    clientId:
+      description: The client id. Used for OAuth flow.
+      type: string
+      example: 6601afe9-85e4-4fe8-a3c9-1329f15493e1
+    clientSecrets:
+      description: |
+        The client secret. Used for signing data e.g. when
+        posting a payload to the PoT Data Broker API.
+      type: array
+      example: |
+        ["Sw4gT3I0oUynpeTN6YGfvFPE8SPj5LC1YNIHfFCF25w"]
+    scopes?:
+      description: The scopes of the OAuth Client. (Not in use at the moment).
+      type: string
+      example: ""
+    redirectUris?:
+      description: |
+        A comma separated list of redirect URIs for the OAuth Client. Only
+        mandatory when creating an App.
+      type: string
+      example: https://example.com/auth-callback
+    defatultScopes?:
+      description: Default scopes to use. (Not in use at the moment).
+      type: string
+      example: ""
+    defaultRedirectUri?:
+      description: |
+        The default redirect URI to use. Only mandatory when
+        creating a new App.
+      type: string
+      example: https://example.com/auth-callback
+token:
+  description: |
+    The JWT token for the OAuth Client. Used for authenticating the App.
+  type: object
+  example: |
+    {
+      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUz...T79_KYC4Ds",
+      "expires_in": 63072000,
+      "token_type": "Bearer",
+      "refresh_token": "SwGAWsFfT1FZrT92NRJc0MaBp9XrmG"
+    }
+  properties:
+    access_token:
+      description: The actual JWT token, used in the headers.
+      type: string
+      example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUz...T79_KYC4Ds
+    expires_in:
+      description: When the token expires.
+      type: integer
+      example: 63072000
+    token_type:
+      description: The token type. Only supported type is `Bearer`
+      type: string
+      example: Bearer
+    refresh_token:
+      description: |
+        The refresh token. Can be used to create a new access token.
+      type: string
+      example: SwGAWsFfT1FZrT92NRJc0MaBp9XrmG

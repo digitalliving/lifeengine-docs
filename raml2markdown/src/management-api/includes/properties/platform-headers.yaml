@@ -1,3 +1,4 @@
-description: The X-Platform-ID header, MUST be `{{platform_id}}`
+description: |
+  The X-Platform-Token header, MUST be a token generated for the Platform.
 type: string
-example: 5e42be10-a7b9-4327-a7b9-43a0467e88ab
+example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX

@@ -18,7 +18,7 @@ description: |
         platform to the DataProduct.
     headers:
       Authorization: !include includes/properties/authorization-headers.yaml
-      X-Platform-ID: !include includes/properties/platform-headers.yaml
+      X-Platform-Token: !include includes/properties/platform-headers.yaml
     body:
       properties: !include includes/properties/product-request.yaml
       example: !include includes/examples/product-create.json

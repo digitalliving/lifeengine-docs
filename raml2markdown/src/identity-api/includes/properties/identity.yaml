@@ -1,7 +1,7 @@
 '@context':
   description: The context URL
   type: string
-  example: https://example.com/contexts/type.jsonld
+  example: https://standards.lifeengine.io/v1/Context/Identity/Building/
 '@type':
   description: The type of the identity
   type: string

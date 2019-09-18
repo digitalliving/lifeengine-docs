@@ -114,6 +114,23 @@ types:
         404:
           body:
             example: !include includes/examples/identity-not-found.json
+        422:
+          body:
+            examples:
+              "Restricted identity type": |
+                {
+                  "error": {
+                    "status": 422,
+                    "message": "Could not delete identity. Try using corresponding APIs to delete this type of identities."
+                  }
+                }
+              "Links exists": |
+                {
+                  "error": {
+                    "status": 422,
+                    "message": "Could not delete identity, reason: links exist to or from the identity."
+                  }
+                }
   /{from_identity}/link/{to_identity}:
     description: Manage links between "from"- and "to"-identities.
     uriParameters:
