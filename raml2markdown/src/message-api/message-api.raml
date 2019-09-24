@@ -33,7 +33,7 @@ types:
         type: string
         example: Remember to buy milk!
       cc?:
-        description: List of IDs to CC the message to.
+        description: List of valid identity IDs to CC the message to.
         type: array
         example: |
           [
@@ -56,6 +56,32 @@ types:
         body:
           properties: !include includes/properties/message.yaml
           example: !include includes/examples/message.json
+      403:
+        body:
+          example: |
+            {
+              "error": {
+                "status": 403,
+                "message": "Forbidden: You don't have 'write' permission on 'bc53e200-14d5-43ce-95dc-2db22ac67d7f'"
+              }
+            }
+      404:
+        body:
+          examples:
+            'To Identity not found': |
+              {
+                "error": {
+                  "status": 404,
+                  "message": "Identity a233e200-14d5-43ce-95dc-2db22ac676fb not found."
+                }
+              }
+            'CC Identity not found': |
+              {
+                "error": {
+                  "status": 404,
+                  "message": "CC Identity e153e200-14d5-43ce-95dc-2db22ac67677 not found."
+                }
+              }
       422:
         body:
           example: |
