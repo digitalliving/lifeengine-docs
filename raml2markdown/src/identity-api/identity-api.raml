@@ -279,6 +279,13 @@ types:
                       "message": "Link of type <type> not found."
                     }
                   }
+                'ACL not found': |
+                  {
+                    "error": {
+                      "status": 404,
+                      "message": "Not Found: ACL for identity '<id>' not found."
+                    }
+                  }
           422:
             body:
               example: |
