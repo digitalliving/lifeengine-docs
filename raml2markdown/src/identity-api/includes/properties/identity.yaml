@@ -1,16 +1,13 @@
 '@context':
-  description: The context URL. Always returned in the response.
+  description: The context URL
   type: string
   example: https://standards.lifeengine.io/v1/Context/Identity/Building/
 '@type':
-  description: The type of the identity. Always returned in the response.
+  description: The type of the identity
   type: string
   example: Building
 data:
-  description: |
-    Additional key-value data for the identity as defined in the context.
-    NOTE: If the user doesn't have the read access to the given identity,
-    the `data` parameter is NOT returned in the response.
+  description: Additional key-value data for the identity as defined in the context
   type: object
   example: |
     {
@@ -24,9 +21,7 @@ data:
 metadata:
   description: |
     Metadata about the app, such as when it was created/updated and who
-    created it / updated it. NOTE: If the user doesn't have the read access to
-    the given identity, the `metadata` parameter is NOT returned in the
-    response.
+    created it / updated it.
   type: object
   example: |
     {
@@ -51,14 +46,8 @@ metadata:
       description: The user ID of the user who updated this identity
       type: string
 inLinks:
-  description: |
-    List of incoming links to the identity. NOTE: If the user doesn't have
-    the read access to the given identity, the `inLinks` parameter is NOT
-    returned in the response.
+  description: List of incoming links to the identity
   type: link[]
 outLinks:
-  description: |
-    List of outgoing links from the identity. NOTE: If the user doesn't have
-    the read access to the given identity, the `outLinks` parameter is NOT
-    returned in the response.
+  description: List of outgoing links from the identity
   type: link[]
