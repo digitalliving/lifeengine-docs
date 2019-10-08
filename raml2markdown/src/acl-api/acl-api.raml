@@ -93,3 +93,29 @@ mediaType: application/json
       404:
         body:
           example: !include includes/examples/crud_404.json
+/batch/{permissions}:
+  uriParameters:
+    permissions:
+      description: A comma separated list of permissions to check
+      type: string
+      example: read,write,link,manage
+  post:
+    description: |
+        Batch check specific permissions. Used to check if the requester has
+        specific privilege(s) on a batch of identities. Will return a mapping
+        from identity ID to a boolean; true if the user has all the
+        requested privileges to the identity and false if not.
+    headers:
+      Authorization: !include includes/properties/authorization-headers.yaml
+    body:
+      example: !include includes/examples/batch_check_post.json
+    responses:
+      200:
+        body:
+          example: !include includes/examples/batch_check_response.json
+      403:
+        body:
+          example: !include includes/examples/crud_403.json
+      404:
+        body:
+          example: !include includes/examples/crud_404.json
