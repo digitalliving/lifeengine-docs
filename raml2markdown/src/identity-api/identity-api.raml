@@ -567,8 +567,8 @@ types:
           description: |
             The link context to traverse. The context MUST end with a forward
             slash /.
-            type: string
-            example: https://standards.oftrust.net/v1/Context/Link/BelongsTo/
+          type: string
+          example: https://standards.oftrust.net/v1/Context/Link/BelongsTo/
         identityContext:
           description: |
             The identity context to search for. The context MUST end with a
@@ -627,13 +627,14 @@ types:
                   An object containing the data products. The object is
                   keyed by the data product product code, and that in turn
                   is an object containing the sensor identity ID as the key
-                  and the value is the external ID for the external system.
+                  and the value is an object containing the link data, such as
+                  the external ID for the external system.
                 type: object
                 example: |
                   "dataProducts": {
                     "data-product-product-code": {
-                      "eccbcc62-37e2-4014-8233-d077fce7bac9": "sensor id 1",
-                      "958f5881-ee48-4a5a-a6ed-bad100ec72ac": "sensor id 2"
+                      "eccbcc62-37e2-4014-8233-d077fce7bac9": {"contentId": "sensor id 1"},
+                      "958f5881-ee48-4a5a-a6ed-bad100ec72ac": {"contentId": "sensor id 2"}
                     }
                   }
               pagination:
