@@ -201,26 +201,19 @@ mediaType: application/json
           application to the Platform.
         type: string
         example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
+      X-APP-AUTHORIZATION-TOKEN:
+        description: |
+          Signed token issued previously to validate sender's intention and data
+          the token carries.
+        type: string
+        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
     body:
       properties:
-        userId:
-          description: The user's id. Is returned from the registration endpoint.
-          type: string
-          example: 7711fae9-85e4-4fe8-a3c9-2319f15493e2
-        clientId:
-          description: The client id.
-          type: string
-          example: 6601afe9-85e4-4fe8-a3c9-1329f15493e1
         role?:
           description: |
             Only sent if authorizing the developer portal. The role MUST be `developer`.
           type: string
           example: developer
-      example: |
-        {
-          "userId": "7711fae9-85e4-4fe8-a3c9-2319f15493e2",
-          "clientId": "6601afe9-85e4-4fe8-a3c9-1329f15493e1"
-        }
     responses:
       200:
       422:
@@ -229,15 +222,21 @@ mediaType: application/json
             'Invalid header': |
               {
                 "error": {
-                  "status": 404,
+                  "status": 422,
                   "message": "Invalid header."
                 }
               }
             'Validation failed': |
               {
                 "error": {
-                  "status": 404,
-                  "message": "Invalid request."
+                  "status": 422,
+                  "message": "Invalid app authorization token"
+                }
+              } |
+              {
+                "error": {
+                  "status": 422,
+                  "message": "Missing X-APP-AUTHORIZATION-TOKEN header"
                 }
               }
 /clients:
