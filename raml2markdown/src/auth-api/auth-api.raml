@@ -837,3 +837,157 @@ mediaType: application/json
                   "message": "Could not register user."
                 }
               }
+
+/password/reset:
+  post:
+    description: |
+      Start the password reset flow for a user. Sends an email to the user
+      with either a one time token that can be used to reset the password or
+      an email stating that the email was not found in the system.
+
+      LifeEngine will connect to the email API of the Platform in order to
+      deliver the email.
+
+      The email API is expected to accept a JSON POST request with arguments
+      "to", "template" and "variables". The request is authenticated using a
+      "Bearer" token in an "Authorization" header.
+
+      The "template" argument will contain either
+      "password_reset_email_found_positive" or
+      "password_reset_email_found_negative",
+      depending on if the email was found in the system or not. The "to" field
+      will contain the email address. The "variables" object will include the
+      "ip" that was submitted to LE and in the case the email was found, also a
+      "token" that will be used in subsequent calls to actually reset the
+      password.
+    headers:
+      x-platform-token:
+        description: |
+          Platform token is used to authenticate that the request comes from a
+          platform and to determine which platform to use for sending the
+          recovery email.
+        type: string
+        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
+    body:
+      properties:
+        email:
+          description: The user's email.
+          type: string
+          example: user@example.com
+        ip:
+          description: The IP address of the user.
+          type: string
+          example: "127.0.0.1"
+      example: |
+        {
+            "email": "user@example.com",
+            "ip": "127.0.0.1"
+        }
+    responses:
+      204:
+        description: |
+          The email was sent successfully to the email API.
+      429:
+        description: |
+          Too many requests sent in too short time.
+      502:
+        body:
+          example: |
+            {
+              "error": {
+                "status": 502,
+                "message": "Could not send email, email API responded with status: 422, reason: Unprocessable Entity"
+              }
+            }
+
+/password/check_reset_token:
+  post:
+    description: |
+      Check whether a reset code is valid or not.
+    headers:
+      x-platform-token:
+        description: |
+          Platform token is used to authenticate the request comes from a
+          platform.
+        type: string
+        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
+    body:
+      properties:
+        email:
+          description: The user's email.
+          type: string
+          example: user@example.com
+        ip:
+          description: The IP address of the user.
+          type: string
+          example: 127.0.0.1
+        token:
+          description: The token, as sent in the email to the user
+          type: string
+          example: 181d5a93-4509-4f00-835c-5cf9e6cd07ec
+      example: |
+        {
+            "email": "user@example.com",
+            "ip": "127.0.0.1",
+            "token": "181d5a93-4509-4f00-835c-5cf9e6cd07ec"
+        }
+    responses:
+      204:
+        description: |
+          The token is valid.
+      403:
+        description: |
+          The token is invalid.
+
+/password/new:
+  post:
+    description: |
+      Sets a new password for the user and invalidates the token.
+    headers:
+      x-platform-token:
+        description: |
+          Platform token is used to authenticate that the request comes from a
+          platform.
+        type: string
+        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
+    body:
+      properties:
+        email:
+          description: The user's email.
+          type: string
+          example: user@example.com
+        ip:
+          description: The IP address of the user.
+          type: string
+          example: 127.0.0.1
+        token:
+          description: The token, as sent in the email to the user
+          type: string
+          example: 181d5a93-4509-4f00-835c-5cf9e6cd07ec
+        password:
+          description: The new password for the user
+          type: string
+          example: 6X_J&!O50nF-
+      example: |
+        {
+            "email": "user@example.com",
+            "ip": "127.0.0.1",
+            "token": "181d5a93-4509-4f00-835c-5cf9e6cd07ec",
+            "password": "6X_J&!O50nF-"
+        }
+    responses:
+      204:
+        description: |
+          The password reset completed successfully.
+      403:
+        description: |
+          The token is invalid.
+      422:
+        body:
+          example: |
+            {
+              "error": {
+                "status": 422,
+                "message": "Password validation failed. Password must be between 8 and 256 characters long."
+              }
+            }
