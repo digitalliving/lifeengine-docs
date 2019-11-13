@@ -177,6 +177,15 @@ types:
                     "message": "To identity not found."
                   }
                 }
+        409:
+          body:
+            example: |
+              {
+                "error": {
+                  "status": 409,
+                  "message": "Could not create link. Does a link of type MemberOf already exist from 59de4a29-944e-4141-a6c9-f5d7bb7707b0 to 7a13c5f6-cf8b-4d18-9f8a-9b884bc6e817?"
+                }
+              }
         422:
           body:
             example: |
