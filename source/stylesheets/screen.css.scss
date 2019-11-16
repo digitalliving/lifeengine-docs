@@ -76,6 +76,8 @@ html, body {
     display: block;
     max-width: 100%;
     margin-bottom: $logo-margin;
+    padding: 1em;
+    width: 10em;
   }
 
   &>.search {
@@ -354,7 +356,7 @@ html, body {
     margin-top: 2em;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-    background-color: #7955ff;
+    background-color: $x-primary;
     color:#fff;
   }
 
@@ -372,7 +374,7 @@ html, body {
     padding-top: 1.2em;
     padding-bottom: 1.2em;
     // background-image: linear-gradient(to bottom, rgba(#fff, 0.2), rgba(#fff, 0));
-    background-color: #7955ff;
+    background-color: $x-primary;
     color:#fff;
   }
 
@@ -548,7 +550,7 @@ html, body {
   pre, blockquote {
     background-color: $code-bg;
     color: #fff;
-    
+
 
     margin: 0;
     width: $examples-width;
@@ -583,7 +585,7 @@ html, body {
       background-color: $code-annotation-bg;
       padding: $code-annotation-padding 2em;
       color: #eee;
-      
+
     }
   }
 }
