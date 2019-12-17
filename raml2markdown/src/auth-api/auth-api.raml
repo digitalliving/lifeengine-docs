@@ -942,7 +942,19 @@ mediaType: application/json
 /password/new:
   post:
     description: |
-      Sets a new password for the user and invalidates the token.
+      Sets a new password for the user and invalidates the token and sends an
+      email to the user to state that the password was changed.
+
+      Lifeengine will connect to the email API of the Platform in order to
+      deliver the email.
+
+      The email API is expected to accept a JSON POST request with arguments
+      "to", "template" and "variables". The request is authenticated using a
+      "Bearer" token in an "Authorization" header.
+
+      The "to" field will contain the email address and the "template" argument
+      will be set to "password_reset_completed". The "variables" object will
+      include the "ip" that was submitted to LE.
     headers:
       x-platform-token:
         description: |
