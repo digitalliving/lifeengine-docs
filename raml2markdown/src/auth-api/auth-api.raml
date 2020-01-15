@@ -841,31 +841,29 @@ mediaType: application/json
 /password/reset:
   post:
     description: |
-      Start the password reset flow for a user. Sends an email to the user
-      with either a one time token that can be used to reset the password or
-      an email stating that the email was not found in the system.
+      Start the password reset flow for a user.
 
-      LifeEngine will connect to the email API of the Platform in order to
-      deliver the email.
+      Does one of three possible things:
+      1. Generates a one time token that can be used to reset the password.
+      This should be emailed by the platform to the user.
+      2. Returns info to the platform that the email address was not found.
+      In this case the platform should send an email stating that there was no
+      user associated with the given email address.
+      3. A rate limit is exceeded (doesn't say anything if the user was found
+      or not). In this case the platform should not send any email.
 
-      The email API is expected to accept a JSON POST request with arguments
-      "to", "template" and "variables". The request is authenticated using a
-      "Bearer" token in an "Authorization" header.
+      In all three cases the platform should display the same message to the
+      end user, stating an email was sent with further instructions.
 
-      The "template" argument will contain either
-      "password_reset_email_found_positive" or
-      "password_reset_email_found_negative",
-      depending on if the email was found in the system or not. The "to" field
-      will contain the email address. The "variables" object will include the
-      "ip" that was submitted to LE and in the case the email was found, also a
-      "token" that will be used in subsequent calls to actually reset the
-      password.
+      Note: The platform shall under no circumstance show the response it got
+      back from Lifeengine or the token. If the token is exposed in an error
+      message to the end user it will allow an attacker to break into an
+      account.
     headers:
       x-platform-token:
         description: |
           Platform token is used to authenticate that the request comes from a
-          platform and to determine which platform to use for sending the
-          recovery email.
+          trusted platform.
         type: string
         example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
     body:
@@ -884,21 +882,21 @@ mediaType: application/json
             "ip": "127.0.0.1"
         }
     responses:
-      204:
+      201:
         description: |
-          The email was sent successfully to the email API.
-      429:
-        description: |
-          Too many requests sent in too short time.
-      502:
+          The token was successfully generated and should be emailed to the user.
         body:
           example: |
             {
-              "error": {
-                "status": 502,
-                "message": "Could not send email, email API responded with status: 422, reason: Unprocessable Entity"
-              }
+              "token": "069a029f-6ff9-4cf0-ac95-dc8440591a1d"
             }
+      404:
+        description: [
+          The user was not found, an email indicating this should be sent to
+          the email address.
+      429:
+        description: |
+          Too many requests sent in too short time. No email should be sent.
 
 /password/check_reset_token:
   post:
@@ -922,7 +920,7 @@ mediaType: application/json
           type: string
           example: 127.0.0.1
         token:
-          description: The token, as sent in the email to the user
+          description: The token, as sent in the email to the user.
           type: string
           example: 181d5a93-4509-4f00-835c-5cf9e6cd07ec
       example: |
@@ -942,19 +940,13 @@ mediaType: application/json
 /password/new:
   post:
     description: |
-      Sets a new password for the user and invalidates the token and sends an
-      email to the user to state that the password was changed.
+      Sets a new password for the user and invalidates the token.
 
-      Lifeengine will connect to the email API of the Platform in order to
-      deliver the email.
+      The platform should send the user an email indicating the password was
+      successfully changed.
 
-      The email API is expected to accept a JSON POST request with arguments
-      "to", "template" and "variables". The request is authenticated using a
-      "Bearer" token in an "Authorization" header.
-
-      The "to" field will contain the email address and the "template" argument
-      will be set to "password_reset_completed". The "variables" object will
-      include the "ip" that was submitted to LE.
+      In case the token is wrong or the password too weak an error will be
+      returned, which should be indicated to the user.
     headers:
       x-platform-token:
         description: |
@@ -973,11 +965,11 @@ mediaType: application/json
           type: string
           example: 127.0.0.1
         token:
-          description: The token, as sent in the email to the user
+          description: The token.
           type: string
           example: 181d5a93-4509-4f00-835c-5cf9e6cd07ec
         password:
-          description: The new password for the user
+          description: The new password for the user.
           type: string
           example: 6X_J&!O50nF-
       example: |
@@ -990,11 +982,15 @@ mediaType: application/json
     responses:
       204:
         description: |
-          The password reset completed successfully.
+          The password reset completed successfully. The platform should send
+          the user an email stating that the password was reset. The email
+          must not contain the new password.
       403:
         description: |
-          The token is invalid.
+          The token is invalid. This should be indicated to the user.
       422:
+        description: |
+          The password validation failed. This should be indicated to the user.
         body:
           example: |
             {
