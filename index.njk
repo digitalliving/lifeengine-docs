@@ -12,22 +12,12 @@
   </head>
   <body>
     <h1>Life Engine API Documentation</h1>
-    
+    {% block content %}
     <ul>
-      
-      <li><a href="./apis/acl/docs/index.html">acl</a></li>
-      
-      <li><a href="./apis/auth/docs/index.html">auth</a></li>
-      
-      <li><a href="./apis/calendar/docs/index.html">calendar</a></li>
-      
-      <li><a href="./apis/identity/docs/index.html">identity</a></li>
-      
-      <li><a href="./apis/management/docs/index.html">management</a></li>
-      
-      <li><a href="./apis/message/docs/index.html">message</a></li>
-      
+      {% for page in mainIndexRenderData.pages %}
+      <li><a href="{{ page.path }}">{{ page.name }}</a></li>
+      {% endfor %}
     </ul>
-    
+    {% endblock %}
   </body>
 </html>
