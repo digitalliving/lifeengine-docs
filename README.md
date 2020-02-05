@@ -9,9 +9,8 @@ To generate docs locally check [.travis.yml](.travis.yml) for usage.
 
 ### Dev
 
-[Slate](https://github.com/slatedocs/slate)
+Generate docs 
 
 ```
-bundle install
-bundle exec middleman server
+npm start
 ```
