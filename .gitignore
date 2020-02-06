@@ -29,12 +29,6 @@ doc/
 \#*\#
 .\#*
 
-# Other build artifacts
-source/index.html.md
-raml2markdown/slate/*-api.md
 
-code-examples-validator
-raml2http.jar
-raml2markdown/code-examples
-raml2markdown/oas-raml-converter
-raml2markdown/OAS
+# Exclude all build files
+index.html
