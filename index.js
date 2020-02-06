@@ -59,7 +59,7 @@ const mainIndexRenderData = {
 
     await writeFileAsync(indexPath, html)
 
-    mainIndexRenderData.pages.push({ 'name': api, 'path': indexPath })
+    mainIndexRenderData.pages.push({ name: api, path: indexPath })
 
     print(`The file ${indexPath} was saved!`)
   }
