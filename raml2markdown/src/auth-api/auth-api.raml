@@ -50,7 +50,7 @@ mediaType: application/json
             }
       422:
         body:
-          example: !include includes/examples/missing_mandatory_data.json
+          example: !include includes/examples/missing-mandatory-data.json
 /validateToken:
   description: Validate the access token in the Authorization header.
   post:
@@ -60,9 +60,9 @@ mediaType: application/json
     responses:
       204:
         body:
-      403:
+      401:
         body:
-          example: !include includes/examples/permission_denied.json
+          example: !include includes/examples/unauthorized-401.json
 /authorize:
   description: |
     The first part of the authorization flow. Creates a new authorization token
@@ -129,7 +129,7 @@ mediaType: application/json
       403:
         body:
           description: If the user supplied invalid credentials.
-          example: !include includes/examples/permission_denied.json
+          example: !include includes/examples/permission-denied.json
 /exchangeToken:
   description: |
     Last part of the authorization flow. Converts the authorization code to an
@@ -189,7 +189,7 @@ mediaType: application/json
             }
       422:
         body:
-          example: !include includes/examples/missing_mandatory_data.json
+          example: !include includes/examples/missing-mandatory-data.json
 /authorizeApplication:
   description: Authorizes an application for a user.
   post:
@@ -262,7 +262,7 @@ mediaType: application/json
               }
         422:
           body:
-            example: !include includes/examples/not_found.json
+            example: !include includes/examples/not-found.json
     /secrets:
       post:
         description: |
@@ -287,15 +287,12 @@ mediaType: application/json
                     "message": "Could not update client with new secret."
                   }
                 }
+          401:
+            body:
+              example: !include includes/examples/unauthorized-401.json
           403:
             body:
-              example: |
-                {
-                  "error": {
-                    "status": 403,
-                    "message": "Permission denied"
-                  }
-                }
+              example: !include includes/examples/permission-denied.json
 
     /authorized/{user_id}:
       uriParameters:
@@ -400,6 +397,9 @@ mediaType: application/json
                 }
               ]
             }
+      401:
+        body:
+          example: !include includes/examples/unauthorized-401.json
   post:
     description: |
       Creates a new app and it's associated OAuth Client.
@@ -487,12 +487,30 @@ mediaType: application/json
                 }
               ]
             }
+      401:
+        body:
+          example: !include includes/examples/unauthorized-401.json
       403:
         body:
-          example: !include includes/examples/permission_denied.json
+          example: |
+            {
+              "error": {
+                "status": 403,
+                "message": "Could not create App. User is not a member of the group."
+              }
+            }
+      404:
+        body:
+          example: |
+            {
+              "error": {
+                "satus": 404,
+                "message": "Group not found."
+              }
+            }
       422:
         body:
-          example: !include includes/examples/missing_mandatory_data.json
+          example: !include includes/examples/missing-mandatory-data.json
   /{id}:
     uriParameters:
       id:
@@ -509,9 +527,12 @@ mediaType: application/json
           body:
             properties: !include includes/properties/app-response.yaml
             example: !include includes/examples/app-response.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
         404:
           body:
-            example: !include includes/examples/not_found.json
+            example: !include includes/examples/not-found.json
     put:
       description: |
         Update an app and it's client. The client secret will not be
@@ -582,24 +603,33 @@ mediaType: application/json
                   "defaultRedirectUri": "https://example.com/auth-callback"
                 }
               }
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
         403:
           body:
-            example: !include includes/examples/permission_denied.json
+            example: !include includes/examples/permission-denied.json
         404:
           body:
-            example: !include includes/examples/not_found.json
+            example: !include includes/examples/not-found.json
         422:
           body:
-            example: !include includes/examples/missing_mandatory_data.json
+            example: !include includes/examples/missing-mandatory-data.json
     delete:
       description: Delete an app.
       headers:
         Authorization: !include includes/properties/authorization-headers.yaml
       responses:
         204:
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
         404:
           body:
-            example: !include includes/examples/not_found.json
+            example: !include includes/examples/not-found.json
 /me:
   description: |
     Gets the information about the currently logged in user. Uses the OAuth
@@ -612,9 +642,12 @@ mediaType: application/json
       200:
         body:
           example: !include includes/examples/user.json
+      401:
+        body:
+          example: !include includes/examples/unauthorized-401.json
       403:
         body:
-          example: !include includes/examples/permission_denied.json
+          example: !include includes/examples/permission-denied.json
   put:
     headers:
       Authorization: !include includes/properties/authorization-headers.yaml
@@ -647,9 +680,12 @@ mediaType: application/json
       200:
         body:
           example: !include includes/examples/user.json
+      401:
+        body:
+          example: !include includes/examples/unauthorized-401.json
       403:
         body:
-          example: !include includes/examples/permission_denied.json
+          example: !include includes/examples/permission-denied.json
 
 /users:
   description: User management
@@ -664,6 +700,9 @@ mediaType: application/json
       201:
         body:
           example: !include includes/examples/user.json
+      401:
+        body:
+          example: !include includes/examples/unauthorized-401.json
       422:
         body:
           examples:
@@ -709,9 +748,15 @@ mediaType: application/json
         200:
           body:
             example: !include includes/examples/user.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
         404:
           body:
-            example: !include includes/examples/not_found.json
+            example: !include includes/examples/not-found.json
     put:
       description: Update a user.
       headers:
@@ -723,9 +768,15 @@ mediaType: application/json
         200:
           body:
             example: !include includes/examples/user.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
         404:
           body:
-            example: !include includes/examples/not_found.json
+            example: !include includes/examples/not-found.json
         422:
           body:
             examples:
@@ -757,7 +808,12 @@ mediaType: application/json
         Authorization: !include includes/properties/authorization-headers.yaml
       responses:
         204:
+        401:
           body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
 /register:
   description: Register a new user.
   post:
@@ -838,164 +894,166 @@ mediaType: application/json
                 }
               }
 
-/password/reset:
-  post:
-    description: |
-      Start the password reset flow for a user.
+/password:
+  description: Password reset functionality
+  /reset:
+    post:
+      description: |
+        Start the password reset flow for a user.
 
-      Does one of three possible things:
-      1. Generates a one time token that can be used to reset the password.
-      This should be emailed by the platform to the user.
-      2. Returns info to the platform that the email address was not found.
-      In this case the platform should send an email stating that there was no
-      user associated with the given email address.
-      3. A rate limit is exceeded (doesn't say anything if the user was found
-      or not). In this case the platform should not send any email.
+        Does one of three possible things:
+        1. Generates a one time token that can be used to reset the password.
+        This should be emailed by the platform to the user.
+        2. Returns info to the platform that the email address was not found.
+        In this case the platform should send an email stating that there was no
+        user associated with the given email address.
+        3. A rate limit is exceeded (doesn't say anything if the user was found
+        or not). In this case the platform should not send any email.
 
-      In all three cases the platform should display the same message to the
-      end user, stating an email was sent with further instructions.
+        In all three cases the platform should display the same message to the
+        end user, stating an email was sent with further instructions.
 
-      Note: The platform shall under no circumstance show the response it got
-      back from Lifeengine or the token. If the token is exposed in an error
-      message to the end user it will allow an attacker to break into an
-      account.
-    headers:
-      x-platform-token:
-        description: |
-          Platform token is used to authenticate that the request comes from a
-          trusted platform.
-        type: string
-        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
-    body:
-      properties:
-        email:
-          description: The user's email.
+        Note: The platform shall under no circumstance show the response it got
+        back from Lifeengine or the token. If the token is exposed in an error
+        message to the end user it will allow an attacker to break into an
+        account.
+      headers:
+        x-platform-token:
+          description: |
+            Platform token is used to authenticate that the request comes from a
+            trusted platform.
           type: string
-          example: user@example.com
-        ip:
-          description: The IP address of the user.
-          type: string
-          example: "127.0.0.1"
-      example: |
-        {
-            "email": "user@example.com",
-            "ip": "127.0.0.1"
-        }
-    responses:
-      201:
-        description: |
-          The token was successfully generated and should be emailed to the user.
-        body:
-          example: |
-            {
-              "token": "069a029f-6ff9-4cf0-ac95-dc8440591a1d"
-            }
-      404:
-        description: [
-          The user was not found, an email indicating this should be sent to
-          the email address.
-      429:
-        description: |
-          Too many requests sent in too short time. No email should be sent.
-
-/password/check_reset_token:
-  post:
-    description: |
-      Check whether a reset code is valid or not.
-    headers:
-      x-platform-token:
-        description: |
-          Platform token is used to authenticate the request comes from a
-          platform.
-        type: string
-        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
-    body:
-      properties:
-        email:
-          description: The user's email.
-          type: string
-          example: user@example.com
-        ip:
-          description: The IP address of the user.
-          type: string
-          example: 127.0.0.1
-        token:
-          description: The token, as sent in the email to the user.
-          type: string
-          example: 181d5a93-4509-4f00-835c-5cf9e6cd07ec
-      example: |
-        {
-            "email": "user@example.com",
-            "ip": "127.0.0.1",
-            "token": "181d5a93-4509-4f00-835c-5cf9e6cd07ec"
-        }
-    responses:
-      204:
-        description: |
-          The token is valid.
-      403:
-        description: |
-          The token is invalid.
-
-/password/new:
-  post:
-    description: |
-      Sets a new password for the user and invalidates the token.
-
-      The platform should send the user an email indicating the password was
-      successfully changed.
-
-      In case the token is wrong or the password too weak an error will be
-      returned, which should be indicated to the user.
-    headers:
-      x-platform-token:
-        description: |
-          Platform token is used to authenticate that the request comes from a
-          platform.
-        type: string
-        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
-    body:
-      properties:
-        email:
-          description: The user's email.
-          type: string
-          example: user@example.com
-        ip:
-          description: The IP address of the user.
-          type: string
-          example: 127.0.0.1
-        token:
-          description: The token.
-          type: string
-          example: 181d5a93-4509-4f00-835c-5cf9e6cd07ec
-        password:
-          description: The new password for the user.
-          type: string
-          example: 6X_J&!O50nF-
-      example: |
-        {
-            "email": "user@example.com",
-            "ip": "127.0.0.1",
-            "token": "181d5a93-4509-4f00-835c-5cf9e6cd07ec",
-            "password": "6X_J&!O50nF-"
-        }
-    responses:
-      204:
-        description: |
-          The password reset completed successfully. The platform should send
-          the user an email stating that the password was reset. The email
-          must not contain the new password.
-      403:
-        description: |
-          The token is invalid. This should be indicated to the user.
-      422:
-        description: |
-          The password validation failed. This should be indicated to the user.
-        body:
-          example: |
-            {
-              "error": {
-                "status": 422,
-                "message": "Password validation failed. Password must be between 8 and 256 characters long."
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
+      body:
+        properties:
+          email:
+            description: The user's email.
+            type: string
+            example: user@example.com
+          ip:
+            description: The IP address of the user.
+            type: string
+            example: "127.0.0.1"
+        example: |
+          {
+              "email": "user@example.com",
+              "ip": "127.0.0.1"
+          }
+      responses:
+        201:
+          description: |
+            The token was successfully generated and should be emailed to the user.
+          body:
+            example: |
+              {
+                "token": "069a029f-6ff9-4cf0-ac95-dc8440591a1d"
               }
-            }
+        404:
+          description: |
+            The user was not found, an email indicating this should be sent to
+            the email address.
+        429:
+          description: |
+            Too many requests sent in too short time. No email should be sent.
+
+  /check_reset_token:
+    post:
+      description: |
+        Check whether a reset code is valid or not.
+      headers:
+        x-platform-token:
+          description: |
+            Platform token is used to authenticate the request comes from a
+            platform.
+          type: string
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
+      body:
+        properties:
+          email:
+            description: The user's email.
+            type: string
+            example: user@example.com
+          ip:
+            description: The IP address of the user.
+            type: string
+            example: 127.0.0.1
+          token:
+            description: The token, as sent in the email to the user.
+            type: string
+            example: 181d5a93-4509-4f00-835c-5cf9e6cd07ec
+        example: |
+          {
+              "email": "user@example.com",
+              "ip": "127.0.0.1",
+              "token": "181d5a93-4509-4f00-835c-5cf9e6cd07ec"
+          }
+      responses:
+        204:
+          description: |
+            The token is valid.
+        403:
+          description: |
+            The token is invalid.
+
+  /new:
+    post:
+      description: |
+        Sets a new password for the user and invalidates the token.
+
+        The platform should send the user an email indicating the password was
+        successfully changed.
+
+        In case the token is wrong or the password too weak an error will be
+        returned, which should be indicated to the user.
+      headers:
+        x-platform-token:
+          description: |
+            Platform token is used to authenticate that the request comes from a
+            platform.
+          type: string
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
+      body:
+        properties:
+          email:
+            description: The user's email.
+            type: string
+            example: user@example.com
+          ip:
+            description: The IP address of the user.
+            type: string
+            example: 127.0.0.1
+          token:
+            description: The token.
+            type: string
+            example: 181d5a93-4509-4f00-835c-5cf9e6cd07ec
+          password:
+            description: The new password for the user.
+            type: string
+            example: 6X_J&!O50nF-
+        example: |
+          {
+              "email": "user@example.com",
+              "ip": "127.0.0.1",
+              "token": "181d5a93-4509-4f00-835c-5cf9e6cd07ec",
+              "password": "6X_J&!O50nF-"
+          }
+      responses:
+        204:
+          description: |
+            The password reset completed successfully. The platform should send
+            the user an email stating that the password was reset. The email
+            must not contain the new password.
+        403:
+          description: |
+            The token is invalid. This should be indicated to the user.
+        422:
+          description: |
+            The password validation failed. This should be indicated to the user.
+          body:
+            example: |
+              {
+                "error": {
+                  "status": 422,
+                  "message": "Password validation failed. Password must be between 8 and 256 characters long."
+                }
+              }

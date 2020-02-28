@@ -56,15 +56,12 @@ types:
         body:
           properties: !include includes/properties/message.yaml
           example: !include includes/examples/message.json
+      401:
+        body:
+          example: !include includes/examples/unauthorized-401.json
       403:
         body:
-          example: |
-            {
-              "error": {
-                "status": 403,
-                "message": "Forbidden: You don't have 'write' permission on 'bc53e200-14d5-43ce-95dc-2db22ac67d7f'"
-              }
-            }
+          example: !include includes/examples/acl-permission-denied-403.json
       404:
         body:
           examples:
@@ -107,6 +104,12 @@ types:
           body:
             properties: !include includes/properties/message.yaml
             example: !include includes/examples/message.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
         404:
           body:
             example: !include includes/examples/message-not-found.json
@@ -122,6 +125,12 @@ types:
           body:
             properties: !include includes/properties/message.yaml
             example: !include includes/examples/message.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
         404:
           body:
             example: !include includes/examples/message-not-found.json
@@ -142,6 +151,12 @@ types:
         204:
           body:
             example: {}
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
         404:
           body:
             example: !include includes/examples/message-not-found.json
@@ -154,15 +169,12 @@ types:
           200:
             body:
               example: {}
+          401:
+            body:
+              example: !include includes/examples/unauthorized-401.json
           403:
             body:
-              example: |
-                {
-                  "error": {
-                    "status": 403,
-                    "message": "User not logged in."
-                  }
-                }
+              example: !include includes/examples/acl-permission-denied-403.json
   /{toIdentity}:
     uriParameters:
       toIdentity:
@@ -180,3 +192,9 @@ types:
             body:
               properties: !include includes/properties/messages.yaml
               example: !include includes/examples/messages.json
+          401:
+            body:
+              example: !include includes/examples/unauthorized-401.json
+          403:
+            body:
+              example: !include includes/examples/acl-permission-denied-403.json

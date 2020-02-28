@@ -27,6 +27,18 @@ description: |
         body:
           properties: !include includes/properties/product-response.yaml
           example: !include includes/examples/product.json
+      401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+      403:
+        body:
+          example: |
+            {
+              "error": {
+                "status": 403,
+                "message": "User is not a member of group."
+              }
+            }
       404:
         body:
           example: |
@@ -61,6 +73,9 @@ description: |
           body:
             properties: !include includes/properties/product-response.yaml
             example: !include includes/examples/product.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
         403:
           body:
             example: !include includes/examples/unauthorized.json
@@ -76,6 +91,9 @@ description: |
           body:
             properties: !include includes/properties/product-response.yaml
             example: !include includes/examples/product-update.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
         403:
           body:
             example: !include includes/examples/unauthorized.json
@@ -96,6 +114,11 @@ description: |
         204:
           body:
             example: {}
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
         403:
           body:
-            example: !include includes/examples/unauthorized.json
+            examples:
+              'No ACL permissions': !include includes/examples/acl-permission-denied-403.json
+              'Unauthorized': !include includes/examples/unauthorized.json

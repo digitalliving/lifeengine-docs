@@ -51,6 +51,9 @@ types:
         body:
           properties: !include includes/properties/identity.yaml
           example: !include includes/examples/identity-without-links.json
+      401:
+        body:
+          example: !include includes/examples/unauthorized-401.json
       422:
         body:
           example: |
@@ -112,6 +115,9 @@ types:
           body:
             properties: !include includes/properties/identity.yaml
             example: !include includes/examples/identity.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
         404:
           body:
             example: !include includes/examples/identity-not-found.json
@@ -150,6 +156,12 @@ types:
           body:
             properties: !include includes/properties/identity.yaml
             example: !include includes/examples/identity.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
         404:
           body:
             example: !include includes/examples/identity-not-found.json
@@ -172,6 +184,12 @@ types:
         204:
           body:
             example: {}
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
         404:
           body:
             example: !include includes/examples/identity-not-found.json
@@ -215,6 +233,12 @@ types:
           body:
             properties: !include includes/properties/link.yaml
             example: !include includes/examples/link.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        403:
+          body:
+            example: !include includes/examples/acl-permission-denied-403.json
         404:
           body:
             examples:
@@ -267,6 +291,9 @@ types:
             body:
               properties: !include includes/properties/link.yaml
               example: !include includes/examples/link.json
+          401:
+            body:
+              example: !include includes/examples/unauthorized-401.json
           404:
             body:
               example: !include includes/examples/link-not-found.json
@@ -284,6 +311,12 @@ types:
             body:
               properties: !include includes/properties/link.yaml
               example: !include includes/examples/link.json
+          401:
+            body:
+              example: !include includes/examples/unauthorized-401.json
+          403:
+            body:
+              example: !include includes/examples/acl-permission-denied-403.json
           404:
             body:
               examples:
@@ -325,6 +358,12 @@ types:
           204:
             body:
               example: {}
+          401:
+            body:
+              example: !include includes/examples/unauthorized-401.json
+          403:
+            body:
+              example: !include includes/examples/acl-permission-denied-403.json
           404:
             body:
               examples:
@@ -406,6 +445,9 @@ types:
           body:
             properties: !include includes/properties/links.yaml
             example: !include includes/examples/links.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
         404:
           body:
             example: !include includes/examples/identity-not-found.json
@@ -559,15 +601,9 @@ types:
                     "totalCount": 174
                   }
             example: !include includes/examples/identity-discovery.json
-        403:
+        401:
           body:
-            example: |
-              {
-                "error": {
-                  "status": 403,
-                  "message": "Forbidden: You don't have 'read' permission on 'f773dafe-20c0-4a25-aa3e-9da0b81b9304'"
-                }
-              }
+            example: !include includes/examples/unauthorized-401.json
         404:
           body:
             example: !include includes/examples/identity-not-found.json
@@ -781,6 +817,9 @@ types:
                     "totalCount": 4
                   }
             example: !include includes/examples/data-product-discovery.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
         404:
           body:
             example: !include includes/examples/identity-not-found.json
