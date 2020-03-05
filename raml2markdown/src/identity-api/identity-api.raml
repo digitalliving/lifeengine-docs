@@ -765,6 +765,14 @@ types:
             must be between 1 and 100.
           type: integer
           example: 20
+        atDataProductContext?:
+          description: |
+            The link between an identity and data product, that determines the capabilities and other
+            information about the identity at the given data product. You can provide
+            a context for this `AtDataProduct` type link, but it defaults to the DLI standards:
+            https://standards.lifeengine.io/v1/Context/Link/AtDataProduct/
+          type: string
+          example: https://standards.oftrust.net/v1/Context/Link/AtDataProduct/
       description: Discover data products in the identity network.
       headers:
         Authorization: !include includes/properties/authorization-headers.yaml
