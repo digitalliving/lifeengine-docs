@@ -12,10 +12,8 @@ from pathlib import Path
 # Example: ./src/product-api/product-api.raml
 APIS = [
     "acl-api",
-    "calendar-api",
     "identity-api",
     "management-api",
-    "message-api",
 ]
 
 
