@@ -138,7 +138,7 @@ client:
     scopes?:
       description: The scopes of the OAuth Client. (Not in use at the moment).
       type: string
-      example: ""
+      example: ''
     redirectUris?:
       description: |
         A comma separated list of redirect URIs for the OAuth Client. Only
@@ -148,7 +148,7 @@ client:
     defatultScopes?:
       description: Default scopes to use. (Not in use at the moment).
       type: string
-      example: ""
+      example: ''
     defaultRedirectUri?:
       description: |
         The default redirect URI to use. Only mandatory when

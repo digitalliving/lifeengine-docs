@@ -7,8 +7,5 @@
   "repeats": "R5/2008-03-01T13:00:00Z/P1Y2M10DT2H30M",
   "content": "April fool's event, held on the courtyard.",
   "location": "Courtyard at Teststreet 12",
-  "cc": [
-    "323bde80-4cc2-472e-bb77-e6a3e95a1253",
-    "0827e9c3-9664-479f-b0ec-956a35d72e4b"
-  ]
+  "cc": ["323bde80-4cc2-472e-bb77-e6a3e95a1253", "0827e9c3-9664-479f-b0ec-956a35d72e4b"]
 }

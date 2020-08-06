@@ -2,9 +2,7 @@
   "error": {
     "status": 422,
     "message": {
-      "<requiredField>": [
-        "Missing data for required field."
-      ]
+      "<requiredField>": ["Missing data for required field."]
     }
   }
 }

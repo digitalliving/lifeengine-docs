@@ -15,9 +15,7 @@
   "outLinks": [],
   "client": {
     "clientId": "6601afe9-85e4-4fe8-a3c9-1329f15493e1",
-    "clientSecrets": [
-      "Sw4gT3I0oUynpeTN6YGfvFPE8SPj5LC1YNIHfFCF25w"
-    ],
+    "clientSecrets": ["Sw4gT3I0oUynpeTN6YGfvFPE8SPj5LC1YNIHfFCF25w"],
     "scopes": "",
     "redirectUris": "https://example.com/auth-callback",
     "defaultScopes": "",
