@@ -351,35 +351,74 @@ types:
                 }
 
   /{id}/links:
-    description: |
-      List links. If the optional `type` GET-parameter is given, only list
-      links by that type. Returns a paginated result of the inbound and
-      outbound links to/from the given identity. Please note that the
-      pagination offset and limit applies to both directions of the links.
     uriParameters:
       id:
         description: The ID of the identity
         type: string
         example: a2a161c9-a7ff-47e7-9b70-4bf4a83bcb90
-    get:
-      queryParameters:
-        type?:
-          description: |
-            If given to `GET /identities/{version}/{id}/links?type=OwnerOf`,
-            will list only the links of `@type: "OwnerOf"`.
-          type: string
-          example: /identities/{version}/{id}/links?type=Owner
-      description: List all inbound and outbound links for a given identity.
-      headers:
-        Authorization: !include includes/properties/authorization-headers.yaml
-      responses:
-        200:
-          body:
-            properties: !include includes/properties/links.yaml
-            example: !include includes/examples/links.json
-        401:
-          body:
-            example: !include includes/examples/unauthorized-401.json
-        404:
-          body:
-            example: !include includes/examples/identity-not-found.json
+    /in:
+      get:
+        description: |
+          List incoming links. If the optional `type` GET-parameter is given, only list
+          links by that type.
+        queryParameters:
+          type?:
+            description: |
+              If given to `GET /identities/{version}/{id}/links/in?type=OwnerOf`,
+              will list only the links of `@type: "OwnerOf"`.
+            type: string
+            example: /identities/{version}/{id}/links/in?type=OwnerOf
+          limit?:
+            description: Limit the amount of records returned. Defaults to 100.
+            type: integer
+            example: 50
+          offset?:
+            description: How many records to skip. Defaults to 0.
+            type: integer
+            example: 100
+        headers:
+          Authorization: !include includes/properties/authorization-headers.yaml
+        responses:
+          200:
+            body:
+              properties: !include includes/properties/links.yaml
+              example: !include includes/examples/links.json
+          401:
+            body:
+              example: !include includes/examples/unauthorized-401.json
+          404:
+            body:
+              example: !include includes/examples/identity-not-found.json
+    /out:
+      get:
+        description: |
+          List outgoing links. If the optional `type` GET-parameter is given, only list
+          links by that type.
+        queryParameters:
+          type?:
+            description: |
+              If given to `GET /identities/{version}/{id}/links/out?type=OwnerOf`,
+              will list only the links of `@type: "OwnerOf"`.
+            type: string
+            example: /identities/{version}/{id}/links/out?type=OwnerOf
+          limit?:
+            description: Limit the amount of records returned. Defaults to 100.
+            type: integer
+            example: 50
+          offset?:
+            description: How many records to skip. Defaults to 0.
+            type: integer
+            example: 100
+        headers:
+          Authorization: !include includes/properties/authorization-headers.yaml
+        responses:
+          200:
+            body:
+              properties: !include includes/properties/links.yaml
+              example: !include includes/examples/links.json
+          401:
+            body:
+              example: !include includes/examples/unauthorized-401.json
+          404:
+            body:
+              example: !include includes/examples/identity-not-found.json
