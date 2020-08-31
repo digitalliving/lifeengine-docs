@@ -13,20 +13,20 @@ description: |
     Create, read, update and delete DataProducts
   post:
     description: |
-        Create a new DataProduct identity and create a Developer type link
-        from the developer identity to it and a Link type link from the
-        platform to the DataProduct.
+        Create a new DataProduct identity and create a DeveloperOf type link
+        from the group identity to the DataProduct and a PublishedOn type link
+        from the DataProduct to the nexus.
     headers:
       Authorization: !include includes/properties/authorization-headers.yaml
-      X-Platform-Token: !include includes/properties/platform-headers.yaml
+      X-Nexus-Token: !include includes/properties/nexus-headers.yaml
     body:
-      properties: !include includes/properties/product-request.yaml
+      properties: !include includes/properties/product-create-request.yaml
       example: !include includes/examples/product-create.json
     responses:
       201:
         body:
-          properties: !include includes/properties/product-response.yaml
-          example: !include includes/examples/product.json
+          properties: !include includes/properties/product-create-response.yaml
+          example: !include includes/examples/product-create-response.json
       401:
           body:
             example: !include includes/examples/unauthorized-401.json
@@ -45,7 +45,7 @@ description: |
             {
               "error": {
                 "status": 404,
-                "message": "Platform not found"
+                "message": "Nexus not found"
               }
             }
       422:

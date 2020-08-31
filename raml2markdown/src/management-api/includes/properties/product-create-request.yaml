@@ -1,0 +1,25 @@
+dataProduct:
+  description: The standard the DataProduct adheres to.
+  type: string
+  example: Weather/Current/Metric
+source:
+  description: The name of the source.
+  type: string
+  example: DliOpenWeatherMap
+data:
+  description: Key-value data for the DataProduct identity
+  type: object
+  example: |
+    {
+      "name": "Example DataProduct"
+    }
+  properties:
+    name:
+      description: The name of the DataProduct identity
+      type: string
+      example: Example DataProduct
+groupId:
+  description: |
+    The id of the group the user is a member of, and will be the
+    developer of the data product.
+  type: string
