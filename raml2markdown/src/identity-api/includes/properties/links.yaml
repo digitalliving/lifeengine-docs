@@ -5,7 +5,6 @@ links:
     {
       "links": [
         {
-          "@context": "https://standards.lifeengine.io/v1/Context/Link/Role/DeveloperAt/",
           "@type": "DeveloperAt",
           "@id": "257482d1-56bf-4b5e-abf2-29014ef1eb0a",
           "from": "e153e200-14d5-43ce-95dc-2db22ac6767f",

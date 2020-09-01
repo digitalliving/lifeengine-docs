@@ -1,14 +1,10 @@
-'@context':
-  description: The context URL. Always returned in the response.
-  type: string
-  example: https://standards.lifeengine.io/v1/Context/Identity/Building/
 '@type':
   description: The type of the identity. Always returned in the response.
   type: string
   example: Building
 data:
   description: |
-    Additional key-value data for the identity as defined in the context.
+    Additional key-value data for the identity.
     NOTE: If the user doesn't have the read access to the given identity,
     the `data` parameter is NOT returned in the response.
   type: object

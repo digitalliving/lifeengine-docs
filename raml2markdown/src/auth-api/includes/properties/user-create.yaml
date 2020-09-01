@@ -22,8 +22,7 @@ lastName:
   example: Doe
 data?:
   description: |
-    Any additional key-value data to be saved for the user, as defined in the
-    context.
+    Any additional key-value data to be saved for the user.
   type: object
   example: |
     {

@@ -12,13 +12,11 @@ types:
   identity:
     type: object
     properties:
-      context:
-        description: The URL to the context for this identity
       type:
         description: The type of the identity
         type: string
       data:
-        description: Additional data for the identity, as defined in the context.
+        description: Additional data for the identity.
         type: object
         properties:
           name:
@@ -27,9 +25,6 @@ types:
   link:
     type: object
     properties:
-      context:
-        description: The URL to the context for this link
-        type: string
       type:
         description: The type of the link
         type: string
@@ -247,10 +242,6 @@ types:
         headers:
           Authorization: !include includes/properties/authorization-headers.yaml
         body:
-          example: |
-            {
-              "context": "<context URL>"
-            }
         responses:
           201:
             body:
