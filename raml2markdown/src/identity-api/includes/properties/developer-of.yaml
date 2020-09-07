@@ -1,0 +1,4 @@
+isDeveloperOf:
+  description: Whether the user/person is a developer of the identity or not.
+  type: boolean
+  example: true

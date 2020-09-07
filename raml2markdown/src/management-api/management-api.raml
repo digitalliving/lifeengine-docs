@@ -7,7 +7,7 @@ mediaType: application/json
 description: |
   The Management API provides means to simplify and combine often performed
   actions. Such are for example creating a DataProduct that involves creating
-  both the identity and links between it, the developer and the platform.
+  both the identity and links between it, the developer and the Nexus.
 /management/v1/products:
   description: |
     Create, read, update and delete DataProducts
@@ -15,7 +15,7 @@ description: |
     description: |
         Create a new DataProduct identity and create a DeveloperOf type link
         from the group identity to the DataProduct and a PublishedOn type link
-        from the DataProduct to the nexus.
+        from the DataProduct to the Nexus.
     headers:
       Authorization: !include includes/properties/authorization-headers.yaml
       X-Nexus-Token: !include includes/properties/nexus-headers.yaml
@@ -57,15 +57,26 @@ description: |
                 "message": "Could not create identity."
               }
             }
-  /{id}:
+  /{nexus_id}/{data_product}:
     description: Read, update and delete data products.
     uriParameters:
-      id:
-        description: The ID of the DataProduct identity
+      nexus_id:
+        description: The UUID of the Nexus the DataProduct is published on.
         type: string
-        example: 2584bdd7-1cb2-48ed-a106-2a1b817cf909
+        example: 60d9f38e-f52e-4d0b-92da-83f08f68add8
+      data_product:
+        description: The standard of the DataProduct.
+        type: string
+        example: Weather/Current/Metric
     get:
-      description: Read one DataProduct identity by id
+      description: |
+        Read a DataProduct identity published on a Nexus.
+      queryParameters:
+        source:
+          description: |
+            The name of the source for the data product.
+          type: string
+          example: "ExampleOpenWeatherMap"
       headers:
         Authorization: !include includes/properties/authorization-headers.yaml
       responses:
@@ -80,7 +91,13 @@ description: |
           body:
             example: !include includes/examples/unauthorized.json
     put:
-      description: Update a DataProduct identity by id
+      description: Update a DataProduct
+      queryParameters:
+        source:
+          description: |
+            The name of the source for the data product.
+          type: string
+          example: "ExampleOpenWeatherMap"
       headers:
         Authorization: !include includes/properties/authorization-headers.yaml
       body:
@@ -107,7 +124,7 @@ description: |
                 }
               }
     delete:
-      description: Delete an identity by id
+      description: Delete a DataProduct
       headers:
         Authorization: !include includes/properties/authorization-headers.yaml
       responses:

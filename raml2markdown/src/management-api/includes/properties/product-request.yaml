@@ -1,21 +1,38 @@
-productCode:
-  description: The product code for the data product.
-  type: string
-  example: product-1
 data:
   description: Key-value data for the DataProduct identity
   type: object
   example: |
     {
-      "name": "Example DataProduct"
+      "name": "Example Productizer",
+      "description": "Example.com productizer to get Open Weather Map weather data",
+      "productizerUrl": "https://productizer.example.com/",
+      "publicKeys": ["...", "..."],
+      "imageUrl": "https://productizer.example.com/image.png",
+      "tags": ["weather"],
+      "policies": {
+        "authenticationRequired": false,
+        "subscriptionRequired": true
+      }
     }
   properties:
     name:
       description: The name of the DataProduct identity
       type: string
-      example: Example DataProduct
-groupId:
-  description: |
-    The id of the group the user is a member of, and will be the
-    developer of the data product.
-  type: string
+      example: Example Productizer
+    description:
+      description: A description for the Productizer
+      type: string
+      example: Example.com productizer to get Open Weather Map weather data
+    publicKeys:
+      description: A list of public keys for the Productizer
+      type: list
+    imageUrl:
+      description: A URL to an image for the Productizer
+      type: string
+    tags:
+      description: Tags for Productizer
+      type: list
+      example: ['weather']
+    policies:
+      description: Policies for the Productizer
+      type: object

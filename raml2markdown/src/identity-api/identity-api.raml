@@ -413,3 +413,61 @@ types:
           404:
             body:
               example: !include includes/examples/identity-not-found.json
+  /dataProduct/{nexus_id}/{data_product}:
+    uriParameters:
+      nexus_id:
+        description: The UUID of the Nexus the DataProduct is published on.
+        type: string
+        example: 60d9f38e-f52e-4d0b-92da-83f08f68add8
+      data_product:
+        description: The standard of the DataProduct.
+        type: string
+        example: Weather/Current/Metric
+    get:
+      description: |
+        Find and read a DataProduct identity published on a Nexus.
+      queryParameters:
+        source:
+          description: |
+            The name of the source for the data product.
+          type: string
+          example: "ExampleOpenWeatherMap"
+      headers:
+        Authorization: !include includes/properties/authorization-headers.yaml
+      responses:
+        200:
+          body:
+            properties: !include includes/properties/identity.yaml
+            example: !include includes/examples/dataproduct.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        404:
+          body:
+            example: !include includes/examples/identity-not-found.json
+  /{user_id}/is-developer-of/{identity_id}
+    uriParameters:
+      user_id:
+        description: The UUID of the Person/User.
+        type: string
+        example: 9a08ecf6-6526-4e7c-b27c-62cc445017b2
+      identity_id:
+        description: The UUID of the target Identity
+        type: string
+        example: cab4fbbb-3df5-43d9-b761-7ab7661a773b
+    get:
+      description: |
+        Check if a user is a developer of the given identity. This means
+        there's a MemberOf link from the Person to some intermediate identity
+        (for example a Group) and from that a DeveloperOf link to the target
+        identity (for example an App or a DataProduct).
+      headers:
+        Authorization: !include includes/properties/authorization-headers.yaml
+    responses:
+        200:
+          body:
+            properties: !include includes/properties/developer-of.yaml
+            example: !include includes/examples/developer-of.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json

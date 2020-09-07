@@ -9,13 +9,39 @@ data:
   type: object
   example: |
     {
-      "name": "Example DataProduct"
+      "name": "Example Productizer",
+      "description": "Example.com productizer to get Open Weather Map weather data",
+      "productizerUrl": "https://productizer.example.com/",
+      "publicKeys": ["...", "..."],
+      "imageUrl": "https://productizer.example.com/image.png",
+      "tags": ["weather"],
+      "policies": {
+        "authenticationRequired": false,
+        "subscriptionRequired": true
+      }
     }
   properties:
     name:
       description: The name of the DataProduct identity
       type: string
-      example: Example DataProduct
+      example: Example Productizer
+    description:
+      description: A description for the Productizer
+      type: string
+      example: Example.com productizer to get Open Weather Map weather data
+    publicKeys:
+      description: A list of public keys for the Productizer
+      type: list
+    imageUrl:
+      description: A URL to an image for the Productizer
+      type: string
+    tags:
+      description: Tags for Productizer
+      type: list
+      example: ['weather']
+    policies:
+      description: Policies for the Productizer
+      type: object
 metadata:
   description: |
     Metadata about the app, such as when it was created/updated and who
@@ -43,9 +69,3 @@ metadata:
       description: RFC3339 datetime when the identity was updated
       type: datetime
       example: 2018-02-28T16:41:41.090Z
-inLinks:
-  description: List of incoming links to the identity
-  type: link[]
-outLinks:
-  description: List of outgoing links from the identity
-  type: link[]

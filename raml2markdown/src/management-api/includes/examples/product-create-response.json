@@ -2,7 +2,16 @@
   "@type": "Virtual/DataProduct",
   "@id": "7a0ee1b6-fde2-42e4-884c-afbf567a0d2b",
   "data": {
-    "name": "Product name"
+    "name": "Example Productizer",
+    "description": "Example.com productizer to get Open Weather Map weather data",
+    "productizerUrl": "https://productizer.example.com/",
+    "publicKeys": ["...", "..."],
+    "imageUrl": "https://productizer.example.com/image.png",
+    "tags": ["weather"],
+    "policies": {
+      "authenticationRequired": false,
+      "subscriptionRequired": true
+    }
   },
   "metadata": {
     "createdBy": "c9620d09-cd83-476e-91f5-3f3ea730f4b9",
