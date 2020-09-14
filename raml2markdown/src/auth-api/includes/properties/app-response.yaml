@@ -67,44 +67,6 @@ metadata:
       description: The user's id who updated the app identity.
       type: string
       example: 56bb2858-e2fc-42d3-b44e-35f138b4b23b
-inLinks:
-  description: List of incoming links to the app identity.
-  type: object[]
-  example: |
-    [
-      {
-        "@type": "Link",
-        "@id": "f4902768-39aa-492d-9d4f-99b5cf13ee2b",
-        "from": "31b5b971-dc50-4c9c-992a-57c0bf016186",
-        "to": "9a403bd7-0511-4f0f-914a-ffb7fdac4105",
-        "data": {},
-        "metadata": {
-          "createdAt": "2019-05-01T12:02:02:32+00:00",
-          "createdBy": "0a52c776-1c9c-42b1-ac03-b64c04abded2",
-          "updatedAt": "2019-05-01T12:02:02:32+00:00",
-          "updatedBy": "0a52c776-1c9c-42b1-ac03-b64c04abded2"
-        }
-      }
-    ]
-outLinks:
-  description: List of outgoing links from the app identity.
-  type: object[]
-  example: |
-    [
-      {
-        "@type": "Link",
-        "@id": "31b5b971-dc50-4c9c-992a-57c0bf016186",
-        "from": "3d3823fa-cb4c-4fd7-9cae-11cb6d741af0",
-        "to": "a32f4446-e9b5-4ed3-8c93-35147dece8f0",
-        "data": {},
-        "metadata": {
-          "createdAt": "2019-05-01T12:02:02:32+00:00",
-          "createdBy": "0a52c776-1c9c-42b1-ac03-b64c04abded2",
-          "updatedAt": "2019-05-01T12:02:02:32+00:00",
-          "updatedBy": "0a52c776-1c9c-42b1-ac03-b64c04abded2"
-        }
-      }
-    ]
 client:
   description: The OAuth client information
   type: object
