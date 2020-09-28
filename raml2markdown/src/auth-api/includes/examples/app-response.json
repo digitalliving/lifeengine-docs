@@ -1,6 +1,6 @@
 {
-  "@type": "App",
-  "@id": "48bb2858-e2fc-42d3-b44e-35f138b4b02d",
+  "type": "App",
+  "id": "48bb2858-e2fc-42d3-b44e-35f138b4b02d",
   "data": {
     "name": "Example Application"
   },

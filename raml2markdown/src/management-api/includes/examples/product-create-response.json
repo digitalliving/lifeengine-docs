@@ -1,6 +1,6 @@
 {
-  "@type": "Virtual/DataProduct",
-  "@id": "7a0ee1b6-fde2-42e4-884c-afbf567a0d2b",
+  "type": "Virtual/DataProduct",
+  "id": "7a0ee1b6-fde2-42e4-884c-afbf567a0d2b",
   "data": {
     "name": "Example Productizer",
     "description": "Example.com productizer to get Open Weather Map weather data",

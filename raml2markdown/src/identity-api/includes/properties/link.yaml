@@ -1,4 +1,4 @@
-'@type':
+type:
   description: The type of the link
   type: string
   example: MemberOf

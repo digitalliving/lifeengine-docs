@@ -1,7 +1,7 @@
-'@type':
+type:
   description: The identity type, DataProduct
   type: string
-'@id':
+id:
   description: The ID of the data product identity.
   type: string
 data:

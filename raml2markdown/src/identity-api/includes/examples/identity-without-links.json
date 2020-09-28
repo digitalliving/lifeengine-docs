@@ -1,6 +1,6 @@
 {
-  "@type": "Group",
-  "@id": "58dc29ab-d52e-4aab-a228-9b54e001797c",
+  "type": "Group",
+  "id": "58dc29ab-d52e-4aab-a228-9b54e001797c",
   "data": {
     "name": "Company Oy"
   },

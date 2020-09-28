@@ -1,8 +1,8 @@
-'@type':
+type:
   description: The identity type, Virtual/DataProduct
   type: string
   example: Virtual/DataProduct
-'@id':
+id:
   description: The ID of the data product identity.
   type: string
 data:

@@ -1,8 +1,8 @@
 {
   "links": [
     {
-      "@type": "DeveloperAt",
-      "@id": "257482d1-56bf-4b5e-abf2-29014ef1eb0a",
+      "type": "DeveloperAt",
+      "id": "257482d1-56bf-4b5e-abf2-29014ef1eb0a",
       "from": "e153e200-14d5-43ce-95dc-2db22ac6767f",
       "to": "00ecc2fe-35fa-4f9c-83d1-a1bab31a0cff",
       "data": {},
@@ -14,8 +14,8 @@
       }
     },
     {
-      "@type": "MemberOf",
-      "@id": "257482d1-56bf-4b5e-abf2-29014ef1eb0a",
+      "type": "MemberOf",
+      "id": "257482d1-56bf-4b5e-abf2-29014ef1eb0a",
       "from": "e153e200-14d5-43ce-95dc-2db22ac6767f",
       "to": "faecc2fe-35fa-4f9c-43d1-a1bab31a0cfe",
       "data": {},

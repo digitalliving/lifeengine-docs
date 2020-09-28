@@ -219,7 +219,7 @@ types:
         Read, update and delete a link of a specific type between the "from"- and "to"-identities.
       uriParameters:
         type:
-          description: The `@type` of the link, for example `Link`, `Tenant` or `Owner`
+          description: The `type` of the link, for example `Link`, `Tenant` or `Owner`
           type: string
           example: Owner
       get:
@@ -356,7 +356,7 @@ types:
           type?:
             description: |
               If given to `GET /identities/{version}/{id}/links/in?type=OwnerOf`,
-              will list only the links of `@type: "OwnerOf"`.
+              will list only the links of `type: "OwnerOf"`.
             type: string
             example: /identities/{version}/{id}/links/in?type=OwnerOf
           limit?:
@@ -389,7 +389,7 @@ types:
           type?:
             description: |
               If given to `GET /identities/{version}/{id}/links/out?type=OwnerOf`,
-              will list only the links of `@type: "OwnerOf"`.
+              will list only the links of `type: "OwnerOf"`.
             type: string
             example: /identities/{version}/{id}/links/out?type=OwnerOf
           limit?:

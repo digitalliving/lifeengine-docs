@@ -1,4 +1,4 @@
-'@type':
+type:
   description: The type of the identity. Always returned in the response.
   type: string
   example: Building

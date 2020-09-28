@@ -1,8 +1,8 @@
-'@type':
+type:
   description: The type of the identity, MUST be `App`
   type: string
   example: App
-'@id':
+id:
   description: The id of the app
   type: string
   example: 48bb2858-e2fc-42d3-b44e-35f138b4b02d
