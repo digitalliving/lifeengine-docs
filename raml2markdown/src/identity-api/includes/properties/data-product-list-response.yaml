@@ -1,0 +1,35 @@
+dataProducts:
+  description: A list of found data products and sources.
+  type: array
+  items:
+    object:
+      properties:
+        source:
+          description: The source of the productizer.
+          type: string
+          example: DigitalLivingOpenWeatherMap
+        standard:
+          description: The standard the productizer conforms to.
+          type: string
+          example: Weather/Current/Metric
+        name?:
+          descritpion: Name of the productizer.
+          type: string
+          example: Example Productizer
+        productizerUrl?:
+          description: The URL at which the productizer is hosted.
+          type: string
+          example: https://example.com/Weather/Current/Metric
+  example: |
+    [
+      {
+        "source": "DigitalLivingOpenWeatherMap",
+        "standard": "Weather/Current/Metric",
+        "name": "Example Productizer",
+        "productizerUrl": "https://example.com/Weather/Current/Metric"
+      }
+    ]
+totalCount:
+  description: Total count of found data products.
+  type: int
+  example: 1

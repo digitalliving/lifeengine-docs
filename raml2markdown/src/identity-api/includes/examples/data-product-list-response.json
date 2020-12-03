@@ -1,0 +1,11 @@
+{
+  "dataProducts": [
+    {
+      "source": "DigitalLivingOpenWeatherMap",
+      "standard": "Weather/Current/Metric",
+      "name": "Example Productizer",
+      "productizerUrl": "https://example.com/Weather/Current/Metric"
+    }
+  ],
+  "totalCount": 1
+}

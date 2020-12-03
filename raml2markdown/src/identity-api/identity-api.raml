@@ -445,7 +445,58 @@ types:
         404:
           body:
             example: !include includes/examples/identity-not-found.json
-  /{user_id}/is-developer-of/{identity_id}
+  /data-product/my-sources:
+    get:
+      description: List your own data product sources.
+      headers:
+        Authorization: !include includes/properties/authorization-headers.yaml
+        X-Nexus-Token: !include includes/properties/nexus-headers.yaml
+      queryParameters:
+        limit?:
+          description: Limit the amount of records returned. Defaults to 100.
+          type: integer
+          example: 50
+        offset?:
+          description: How many records to skip. Defaults to 0.
+          type: integer
+          example: 100
+      responses:
+        200:
+          body:
+            properties: !include includes/properties/data-product-list-response.yaml
+            example: !include includes/examples/data-product-list-response.json
+        401:
+          body:
+            example: !include includes/examples/unauthorized-401.json
+        422:
+          body:
+            example: !include includes/examples/invalid-nexus-token-422.json
+  /data-product/search:
+    post:
+      description: Search data product sources connected to a Nexus.
+      headers:
+        X-Nexus-Token: !include includes/properties/nexus-headers.yaml
+      queryParameters:
+        limit?:
+          description: Limit the amount of records returned. Defaults to 100.
+          type: integer
+          example: 50
+        offset?:
+          description: How many records to skip. Defaults to 0.
+          type: integer
+          example: 100
+      body:
+        properties: !include includes/properties/data-product-search-request.yaml
+        example: !include includes/examples/data-product-search.json
+      responses:
+        200:
+          body:
+            properties: !include includes/properties/data-product-list-response.yaml
+            example: !include includes/examples/data-product-list-response.json
+        422:
+          body:
+            example: !include includes/examples/invalid-nexus-token-422.json
+  /{user_id}/is-developer-of/{identity_id}:
     uriParameters:
       user_id:
         description: The UUID of the Person/User.
@@ -463,11 +514,11 @@ types:
         identity (for example an App or a DataProduct).
       headers:
         Authorization: !include includes/properties/authorization-headers.yaml
-    responses:
-        200:
-          body:
-            properties: !include includes/properties/developer-of.yaml
-            example: !include includes/examples/developer-of.json
-        401:
-          body:
-            example: !include includes/examples/unauthorized-401.json
+      responses:
+          200:
+            body:
+              properties: !include includes/properties/developer-of.yaml
+              example: !include includes/examples/developer-of.json
+          401:
+            body:
+              example: !include includes/examples/unauthorized-401.json

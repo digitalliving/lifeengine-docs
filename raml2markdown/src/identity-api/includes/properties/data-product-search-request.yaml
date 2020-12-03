@@ -1,0 +1,8 @@
+standard:
+  description: The standard the data product(s) must conform to.
+  type: string
+  example: Weather/Current/Metric
+source?:
+  description: The source of the matching data product(s).
+  type: object
+  example: DigitalLivingOpenWeatherMap

@@ -1,0 +1,4 @@
+description: |
+  The X-Nexus-Token header, MUST be a token generated for the Nexus.
+type: string
+example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...of5sEZBpzWHqjLd2LPsQZX
