@@ -1,6 +1,7 @@
 {
   "dataProducts": [
     {
+      "id": "f4ae7c67-7e84-4f3a-a288-fa0753f640ac",
       "source": "DigitalLivingOpenWeatherMap",
       "standard": "Weather/Current/Metric",
       "name": "Example Productizer",

@@ -4,6 +4,10 @@ dataProducts:
   items:
     object:
       properties:
+        id:
+          description: The UUID of the Virtual/DataProduct identity.
+          type: string
+          example: f4ae7c67-7e84-4f3a-a288-fa0753f640ac
         source:
           description: The source of the productizer.
           type: string
@@ -23,6 +27,7 @@ dataProducts:
   example: |
     [
       {
+        "id": "f4ae7c67-7e84-4f3a-a288-fa0753f640ac",
         "source": "DigitalLivingOpenWeatherMap",
         "standard": "Weather/Current/Metric",
         "name": "Example Productizer",

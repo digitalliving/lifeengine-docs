@@ -1,4 +1,4 @@
-dataProduct:
+standard:
   description: The standard the DataProduct adheres to.
   type: string
   example: Weather/Current/Metric

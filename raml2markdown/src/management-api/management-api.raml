@@ -57,14 +57,10 @@ description: |
                 "message": "Could not create identity."
               }
             }
-  /{nexus_id}/{data_product}:
-    description: Read, update and delete data products.
+  /{standard}:
+    description: Read, update and delete data product sources.
     uriParameters:
-      nexus_id:
-        description: The UUID of the Nexus the DataProduct is published on.
-        type: string
-        example: 60d9f38e-f52e-4d0b-92da-83f08f68add8
-      data_product:
+      standard:
         description: The standard of the DataProduct.
         type: string
         example: Weather/Current/Metric
@@ -79,6 +75,7 @@ description: |
           example: "ExampleOpenWeatherMap"
       headers:
         Authorization: !include includes/properties/authorization-headers.yaml
+        X-Nexus-Token: !include includes/properties/nexus-headers.yaml
       responses:
         200:
           body:
@@ -91,7 +88,7 @@ description: |
           body:
             example: !include includes/examples/unauthorized.json
     put:
-      description: Update a DataProduct
+      description: Update a DataProduct source.
       queryParameters:
         source:
           description: |
@@ -100,6 +97,7 @@ description: |
           example: "ExampleOpenWeatherMap"
       headers:
         Authorization: !include includes/properties/authorization-headers.yaml
+        X-Nexus-Token: !include includes/properties/nexus-headers.yaml
       body:
         properties: !include includes/properties/product-request.yaml
         example: !include includes/examples/product-update.json
@@ -124,9 +122,10 @@ description: |
                 }
               }
     delete:
-      description: Delete a DataProduct
+      description: Delete a DataProduct source.
       headers:
         Authorization: !include includes/properties/authorization-headers.yaml
+        X-Nexus-Token: !include includes/properties/nexus-headers.yaml
       responses:
         204:
           body:
