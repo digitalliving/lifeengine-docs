@@ -413,38 +413,6 @@ types:
           404:
             body:
               example: !include includes/examples/identity-not-found.json
-  /dataProduct/{nexus_id}/{data_product}:
-    uriParameters:
-      nexus_id:
-        description: The UUID of the Nexus the DataProduct is published on.
-        type: string
-        example: 60d9f38e-f52e-4d0b-92da-83f08f68add8
-      data_product:
-        description: The standard of the DataProduct.
-        type: string
-        example: Weather/Current/Metric
-    get:
-      description: |
-        Find and read a DataProduct identity published on a Nexus.
-      queryParameters:
-        source:
-          description: |
-            The name of the source for the data product.
-          type: string
-          example: "ExampleOpenWeatherMap"
-      headers:
-        Authorization: !include includes/properties/authorization-headers.yaml
-      responses:
-        200:
-          body:
-            properties: !include includes/properties/identity.yaml
-            example: !include includes/examples/dataproduct.json
-        401:
-          body:
-            example: !include includes/examples/unauthorized-401.json
-        404:
-          body:
-            example: !include includes/examples/identity-not-found.json
   /data-product/my-sources:
     get:
       description: List your own data product sources.
