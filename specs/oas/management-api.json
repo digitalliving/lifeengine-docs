@@ -1,0 +1,874 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Management",
+    "description": "The Management API provides means to simplify and combine often performed\nactions. Such are for example creating a DataProduct that involves creating\nboth the identity and links between it, the developer and the Nexus.\n",
+    "version": "v1"
+  },
+  "host": "api-sandbox.lifeengine.io",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/management/v1/products": {
+      "post": {
+        "description": "Create a new DataProduct identity and create a DeveloperOf type link\nfrom the group identity to the DataProduct and a PublishedOn type link\nfrom the DataProduct to the Nexus.\n",
+        "operationId": "POST_management-v1-products",
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "example": {
+                "type": "Virtual/DataProduct",
+                "id": "7a0ee1b6-fde2-42e4-884c-afbf567a0d2b",
+                "data": {
+                  "name": "Example Productizer",
+                  "description": "Example.com productizer to get Open Weather Map weather data",
+                  "productizerUrl": "https://productizer.example.com/",
+                  "publicKeys": [
+                    "...",
+                    "..."
+                  ],
+                  "imageUrl": "https://productizer.example.com/image.png",
+                  "tags": [
+                    "weather"
+                  ],
+                  "policies": {
+                    "authenticationRequired": false,
+                    "subscriptionRequired": true
+                  }
+                },
+                "metadata": {
+                  "createdBy": "c9620d09-cd83-476e-91f5-3f3ea730f4b9",
+                  "updatedBy": "c9620d09-cd83-476e-91f5-3f3ea730f4b9",
+                  "createdAt": "2018-02-28T16:41:41.090Z",
+                  "updatedAt": "2018-02-28T16:41:41.090Z"
+                }
+              },
+              "properties": {
+                "type": {
+                  "description": "The identity type, Virtual/DataProduct",
+                  "example": "Virtual/DataProduct",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "The ID of the data product identity.",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Key-value data for the DataProduct identity",
+                  "example": "{\n  \"name\": \"Example DataProduct\"\n  \"description\": \"Example.com productizer to get Open Weather Map weather data\",\n  \"productizerUrl\": \"https://productizer.example.com/\",\n  \"publicKeys\": [\"...\", \"...\"],\n  \"imageUrl\": \"https://productizer.example.com/image.png\",\n  \"tags\": [\"weather\"],\n  \"policies\": {\n    \"authenticationRequired\": false,\n    \"subscriptionRequired\": true\n  }\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The name of the DataProduct identity",
+                      "example": "Example Productizer",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "A description for the Productizer",
+                      "example": "Example.com productizer to get Open Weather Map weather data",
+                      "type": "string"
+                    },
+                    "publicKeys": {
+                      "description": "A list of public keys for the Productizer",
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "description": "A URL to an image for the Productizer",
+                      "type": "string"
+                    },
+                    "tags": {
+                      "description": "Tags for Productizer",
+                      "example": [
+                        "weather"
+                      ],
+                      "type": "string"
+                    },
+                    "policies": {
+                      "description": "Policies for the Productizer",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "publicKeys",
+                    "imageUrl",
+                    "tags",
+                    "policies"
+                  ]
+                },
+                "metadata": {
+                  "description": "Metadata about the DataProduct, such as when it was created/updated and who\ncreated it / updated it.\n",
+                  "example": "{\n  \"createdAt\": \"2018-12-03T14:33:44\",\n  \"createdBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n  \"updatedAt\": \"2018-12-03T14:33:44\",\n  \"updatedBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "createdBy": {
+                      "description": "The user ID of the user who created this identity",
+                      "type": "string"
+                    },
+                    "updatedBy": {
+                      "description": "The user ID of the user who updated this identity",
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "description": "RFC3339 datetime when the identity was created",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "description": "RFC3339 datetime when the identity was updated",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "createdBy",
+                    "updatedBy",
+                    "createdAt",
+                    "updatedAt"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "id",
+                "data",
+                "metadata"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 403,
+                  "message": "User is not a member of group."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 404,
+                  "message": "Nexus not found"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 422,
+                  "message": "Could not create identity."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "description": "The X-Nexus-Token header, MUST be a token generated for the Nexus.\n",
+            "type": "string",
+            "in": "header",
+            "name": "X-Nexus-Token",
+            "required": true
+          },
+          {
+            "schema": {
+              "example": {
+                "standard": "Weather/Current/Metric",
+                "source": "ExampleOpenWeatherMap",
+                "groupId": "0920a84a-1548-4644-b95d-e3f80e1b9ca6",
+                "data": {
+                  "name": "Example Productizer",
+                  "description": "Example.com productizer to get Open Weather Map weather data",
+                  "productizerUrl": "https://productizer.example.com/",
+                  "publicKeys": [
+                    "...",
+                    "..."
+                  ],
+                  "imageUrl": "https://productizer.example.com/image.png",
+                  "tags": [
+                    "weather"
+                  ],
+                  "policies": {
+                    "authenticationRequired": false,
+                    "subscriptionRequired": true
+                  }
+                }
+              },
+              "properties": {
+                "standard": {
+                  "description": "The standard the DataProduct adheres to.",
+                  "example": "Weather/Current/Metric",
+                  "type": "string"
+                },
+                "source": {
+                  "description": "The name of the source.",
+                  "example": "ExampleOpenWeatherMap",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Key-value data for the DataProduct identity",
+                  "example": {
+                    "name": "Example Productizer",
+                    "description": "Example.com productizer to get Open Weather Map weather data",
+                    "productizerUrl": "https://productizer.example.com/",
+                    "publicKeys": [
+                      "...",
+                      "..."
+                    ],
+                    "imageUrl": "https://productizer.example.com/image.png",
+                    "tags": [
+                      "weather"
+                    ],
+                    "policies": {
+                      "authenticationRequired": false,
+                      "subscriptionRequired": true
+                    }
+                  },
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The name of the DataProduct identity",
+                      "example": "Example Productizer",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "A description for the Productizer",
+                      "example": "Example.com productizer to get Open Weather Map weather data",
+                      "type": "string"
+                    },
+                    "publicKeys": {
+                      "description": "A list of public keys for the Productizer",
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "description": "A URL to an image for the Productizer",
+                      "type": "string"
+                    },
+                    "tags": {
+                      "description": "Tags for Productizer",
+                      "example": [
+                        "weather"
+                      ],
+                      "type": "string"
+                    },
+                    "policies": {
+                      "description": "Policies for the Productizer",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "publicKeys",
+                    "imageUrl",
+                    "tags",
+                    "policies"
+                  ]
+                },
+                "groupId": {
+                  "description": "The id of the group the user is a member of, and will be the\ndeveloper of the data product.\n",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "standard",
+                "source",
+                "data",
+                "groupId"
+              ],
+              "type": "object"
+            },
+            "in": "body",
+            "name": "body",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/management/v1/products/{standard}": {
+      "get": {
+        "description": "Read a DataProduct identity published on a Nexus.\n",
+        "operationId": "GET_management-v1-products-standard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "type": "DataProduct",
+                "id": "7a0ee1b6-fde2-42e4-884c-afbf567a0d2b",
+                "data": {
+                  "name": "Example Productizer",
+                  "description": "Example.com productizer to get Open Weather Map weather data",
+                  "productizerUrl": "https://productizer.example.com/",
+                  "publicKeys": [
+                    "...",
+                    "..."
+                  ],
+                  "imageUrl": "https://productizer.example.com/image.png",
+                  "tags": [
+                    "weather"
+                  ],
+                  "policies": {
+                    "authenticationRequired": false,
+                    "subscriptionRequired": true
+                  }
+                },
+                "metadata": {
+                  "createdBy": "c9620d09-cd83-476e-91f5-3f3ea730f4b9",
+                  "updatedBy": "c9620d09-cd83-476e-91f5-3f3ea730f4b9",
+                  "createdAt": "2018-02-28T16:41:41.090Z",
+                  "updatedAt": "2018-02-28T16:41:41.090Z"
+                }
+              },
+              "properties": {
+                "type": {
+                  "description": "The identity type, DataProduct",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "The ID of the data product identity.",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Key-value data for the DataProduct identity",
+                  "example": {
+                    "name": "Example Productizer",
+                    "description": "Example.com productizer to get Open Weather Map weather data",
+                    "productizerUrl": "https://productizer.example.com/",
+                    "publicKeys": [
+                      "...",
+                      "..."
+                    ],
+                    "imageUrl": "https://productizer.example.com/image.png",
+                    "tags": [
+                      "weather"
+                    ],
+                    "policies": {
+                      "authenticationRequired": false,
+                      "subscriptionRequired": true
+                    }
+                  },
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The name of the DataProduct identity",
+                      "example": "Example Productizer",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "A description for the Productizer",
+                      "example": "Example.com productizer to get Open Weather Map weather data",
+                      "type": "string"
+                    },
+                    "publicKeys": {
+                      "description": "A list of public keys for the Productizer",
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "description": "A URL to an image for the Productizer",
+                      "type": "string"
+                    },
+                    "tags": {
+                      "description": "Tags for Productizer",
+                      "example": [
+                        "weather"
+                      ],
+                      "type": "string"
+                    },
+                    "policies": {
+                      "description": "Policies for the Productizer",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "publicKeys",
+                    "imageUrl",
+                    "tags",
+                    "policies"
+                  ]
+                },
+                "metadata": {
+                  "description": "Metadata about the app, such as when it was created/updated and who\ncreated it / updated it.\n",
+                  "example": "{\n  \"createdAt\": \"2018-12-03T14:33:44\",\n  \"createdBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n  \"updatedAt\": \"2018-12-03T14:33:44\",\n  \"updatedBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "createdBy": {
+                      "description": "The user ID of the user who created this identity",
+                      "type": "string"
+                    },
+                    "updatedBy": {
+                      "description": "The user ID of the user who updated this identity",
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "description": "RFC3339 datetime when the identity was created",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "description": "RFC3339 datetime when the identity was updated",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "createdBy",
+                    "updatedBy",
+                    "createdAt",
+                    "updatedAt"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "id",
+                "data",
+                "metadata"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 403,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "description": "The X-Nexus-Token header, MUST be a token generated for the Nexus.\n",
+            "type": "string",
+            "in": "header",
+            "name": "X-Nexus-Token",
+            "required": true
+          },
+          {
+            "description": "The name of the source for the data product.\n",
+            "type": "string",
+            "in": "query",
+            "name": "source",
+            "required": true
+          }
+        ]
+      },
+      "put": {
+        "description": "Update a DataProduct source.",
+        "operationId": "PUT_management-v1-products-standard",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "data": {
+                  "name": "Example Productizer",
+                  "description": "Example.com productizer to get Open Weather Map weather data",
+                  "productizerUrl": "https://productizer.example.com/",
+                  "publicKeys": [
+                    "...",
+                    "..."
+                  ],
+                  "imageUrl": "https://productizer.example.com/image.png",
+                  "tags": [
+                    "weather"
+                  ],
+                  "policies": {
+                    "authenticationRequired": false,
+                    "subscriptionRequired": true
+                  }
+                }
+              },
+              "properties": {
+                "type": {
+                  "description": "The identity type, DataProduct",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "The ID of the data product identity.",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Key-value data for the DataProduct identity",
+                  "example": {
+                    "name": "Example Productizer",
+                    "description": "Example.com productizer to get Open Weather Map weather data",
+                    "productizerUrl": "https://productizer.example.com/",
+                    "publicKeys": [
+                      "...",
+                      "..."
+                    ],
+                    "imageUrl": "https://productizer.example.com/image.png",
+                    "tags": [
+                      "weather"
+                    ],
+                    "policies": {
+                      "authenticationRequired": false,
+                      "subscriptionRequired": true
+                    }
+                  },
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The name of the DataProduct identity",
+                      "example": "Example Productizer",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "A description for the Productizer",
+                      "example": "Example.com productizer to get Open Weather Map weather data",
+                      "type": "string"
+                    },
+                    "publicKeys": {
+                      "description": "A list of public keys for the Productizer",
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "description": "A URL to an image for the Productizer",
+                      "type": "string"
+                    },
+                    "tags": {
+                      "description": "Tags for Productizer",
+                      "example": [
+                        "weather"
+                      ],
+                      "type": "string"
+                    },
+                    "policies": {
+                      "description": "Policies for the Productizer",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "publicKeys",
+                    "imageUrl",
+                    "tags",
+                    "policies"
+                  ]
+                },
+                "metadata": {
+                  "description": "Metadata about the app, such as when it was created/updated and who\ncreated it / updated it.\n",
+                  "example": "{\n  \"createdAt\": \"2018-12-03T14:33:44\",\n  \"createdBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n  \"updatedAt\": \"2018-12-03T14:33:44\",\n  \"updatedBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "createdBy": {
+                      "description": "The user ID of the user who created this identity",
+                      "type": "string"
+                    },
+                    "updatedBy": {
+                      "description": "The user ID of the user who updated this identity",
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "description": "RFC3339 datetime when the identity was created",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "description": "RFC3339 datetime when the identity was updated",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "createdBy",
+                    "updatedBy",
+                    "createdAt",
+                    "updatedAt"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "id",
+                "data",
+                "metadata"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 403,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 422,
+                  "message": "Could not update identity."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "description": "The X-Nexus-Token header, MUST be a token generated for the Nexus.\n",
+            "type": "string",
+            "in": "header",
+            "name": "X-Nexus-Token",
+            "required": true
+          },
+          {
+            "schema": {
+              "example": {
+                "data": {
+                  "name": "Example Productizer",
+                  "description": "Example.com productizer to get Open Weather Map weather data",
+                  "productizerUrl": "https://productizer.example.com/",
+                  "publicKeys": [
+                    "...",
+                    "..."
+                  ],
+                  "imageUrl": "https://productizer.example.com/image.png",
+                  "tags": [
+                    "weather"
+                  ],
+                  "policies": {
+                    "authenticationRequired": false,
+                    "subscriptionRequired": true
+                  }
+                }
+              },
+              "properties": {
+                "data": {
+                  "description": "Key-value data for the DataProduct identity",
+                  "example": {
+                    "name": "Example Productizer",
+                    "description": "Example.com productizer to get Open Weather Map weather data",
+                    "productizerUrl": "https://productizer.example.com/",
+                    "publicKeys": [
+                      "...",
+                      "..."
+                    ],
+                    "imageUrl": "https://productizer.example.com/image.png",
+                    "tags": [
+                      "weather"
+                    ],
+                    "policies": {
+                      "authenticationRequired": false,
+                      "subscriptionRequired": true
+                    }
+                  },
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The name of the DataProduct identity",
+                      "example": "Example Productizer",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "A description for the Productizer",
+                      "example": "Example.com productizer to get Open Weather Map weather data",
+                      "type": "string"
+                    },
+                    "publicKeys": {
+                      "description": "A list of public keys for the Productizer",
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "description": "A URL to an image for the Productizer",
+                      "type": "string"
+                    },
+                    "tags": {
+                      "description": "Tags for Productizer",
+                      "example": [
+                        "weather"
+                      ],
+                      "type": "string"
+                    },
+                    "policies": {
+                      "description": "Policies for the Productizer",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "publicKeys",
+                    "imageUrl",
+                    "tags",
+                    "policies"
+                  ]
+                }
+              },
+              "required": [
+                "data"
+              ],
+              "type": "object"
+            },
+            "in": "body",
+            "name": "body",
+            "required": true
+          },
+          {
+            "description": "The name of the source for the data product.\n",
+            "type": "string",
+            "in": "query",
+            "name": "source",
+            "required": true
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete a DataProduct source.",
+        "operationId": "DELETE_management-v1-products-standard",
+        "responses": {
+          "204": {
+            "description": "",
+            "schema": {
+              "example": {}
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "schema": {
+              "example": {
+                "No ACL permissions": {
+                  "error": {
+                    "status": 403,
+                    "message": "Forbidden: You don't have '<perm>' permission on '<identity id>'"
+                  }
+                },
+                "Unauthorized": {
+                  "error": {
+                    "status": 403,
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "description": "The X-Nexus-Token header, MUST be a token generated for the Nexus.\n",
+            "type": "string",
+            "in": "header",
+            "name": "X-Nexus-Token",
+            "required": true
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "description": "The standard of the DataProduct.",
+          "type": "string",
+          "in": "path",
+          "name": "standard",
+          "required": true
+        }
+      ]
+    }
+  }
+}

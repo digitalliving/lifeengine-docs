@@ -1,0 +1,1645 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Identity",
+    "description": "The Identity API provides means to create, update and delete digital twins\n(identities) and manage links between them.\nThe links provides the direction and type (sometimes called role) of the link.\n",
+    "version": "v1"
+  },
+  "host": "api-sandbox.lifeengine.io",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "definitions": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "The type of the identity",
+          "type": "string"
+        },
+        "data": {
+          "description": "Additional data for the identity.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "The name of the identity",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "data"
+      ]
+    },
+    "link": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "The type of the link",
+          "type": "string"
+        },
+        "data": {
+          "description": "Additional key-value data for the link.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    }
+  },
+  "paths": {
+    "/identities/v1": {
+      "post": {
+        "description": "Create a new identity",
+        "operationId": "POST_identities-v1",
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "example": {
+                "type": "Group",
+                "id": "58dc29ab-d52e-4aab-a228-9b54e001797c",
+                "data": {
+                  "name": "Company Oy"
+                },
+                "metadata": {
+                  "createdBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "updatedBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "createdAt": "2018-02-28T16:41:41.090Z",
+                  "updatedAt": "2018-02-28T16:41:41.090Z"
+                },
+                "inLinks": [],
+                "outLinks": []
+              },
+              "properties": {
+                "type": {
+                  "description": "The type of the identity. Always returned in the response.",
+                  "example": "Building",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Additional key-value data for the identity.\nNOTE: If the user doesn't have the read access to the given identity,\nthe `data` parameter is NOT returned in the response.\n",
+                  "example": {
+                    "name": "Example building"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The name of the identity",
+                      "example": "Example building",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                },
+                "metadata": {
+                  "description": "Metadata about the app, such as when it was created/updated and who\ncreated it / updated it. NOTE: If the user doesn't have the read access to\nthe given identity, the `metadata` parameter is NOT returned in the\nresponse.\n",
+                  "example": "{\n  \"createdAt\": \"2018-12-03T14:33:44\",\n  \"createdBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n  \"updatedAt\": \"2018-12-03T14:33:44\",\n  \"updatedBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "description": "RFC3339 datetime when the identity was created",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdBy": {
+                      "description": "The user ID of the user who created this identity",
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "description": "RFC3339 datetime when the identity was updated",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedBy": {
+                      "description": "The user ID of the user who updated this identity",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "createdAt",
+                    "createdBy",
+                    "updatedAt",
+                    "updatedBy"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "data",
+                "metadata"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 422,
+                  "message": "Could not create identity."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "schema": {
+              "example": {
+                "type": "Group",
+                "data": {
+                  "name": "Company Oy"
+                }
+              },
+              "$ref": "#/definitions/identity"
+            },
+            "in": "body",
+            "name": "body",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/identities/v1/{id}": {
+      "get": {
+        "description": "Read one identity by id. Requires the `read` permission on the\nidentity.\n",
+        "operationId": "GET_identities-v1-id",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "type": "Group",
+                "id": "58dc29ab-d52e-4aab-a228-9b54e001797c",
+                "data": {
+                  "name": "Company Oy"
+                },
+                "metadata": {
+                  "createdBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "updatedBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "createdAt": "2018-02-28T16:41:41.090Z",
+                  "updatedAt": "2018-02-28T16:41:41.090Z"
+                }
+              },
+              "properties": {
+                "type": {
+                  "description": "The type of the identity. Always returned in the response.",
+                  "example": "Building",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Additional key-value data for the identity.\nNOTE: If the user doesn't have the read access to the given identity,\nthe `data` parameter is NOT returned in the response.\n",
+                  "example": {
+                    "name": "Example building"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The name of the identity",
+                      "example": "Example building",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                },
+                "metadata": {
+                  "description": "Metadata about the app, such as when it was created/updated and who\ncreated it / updated it. NOTE: If the user doesn't have the read access to\nthe given identity, the `metadata` parameter is NOT returned in the\nresponse.\n",
+                  "example": "{\n  \"createdAt\": \"2018-12-03T14:33:44\",\n  \"createdBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n  \"updatedAt\": \"2018-12-03T14:33:44\",\n  \"updatedBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "description": "RFC3339 datetime when the identity was created",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdBy": {
+                      "description": "The user ID of the user who created this identity",
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "description": "RFC3339 datetime when the identity was updated",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedBy": {
+                      "description": "The user ID of the user who updated this identity",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "createdAt",
+                    "createdBy",
+                    "updatedAt",
+                    "updatedBy"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "data",
+                "metadata"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 404,
+                  "message": "Identity not found."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          }
+        ]
+      },
+      "put": {
+        "description": "Update an identity by id. Requires the `write` permission on the\nidentity.\n",
+        "operationId": "PUT_identities-v1-id",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "type": "Group",
+                "id": "58dc29ab-d52e-4aab-a228-9b54e001797c",
+                "data": {
+                  "name": "Company Oy"
+                },
+                "metadata": {
+                  "createdBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "updatedBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "createdAt": "2018-02-28T16:41:41.090Z",
+                  "updatedAt": "2018-02-28T16:41:41.090Z"
+                }
+              },
+              "properties": {
+                "type": {
+                  "description": "The type of the identity. Always returned in the response.",
+                  "example": "Building",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Additional key-value data for the identity.\nNOTE: If the user doesn't have the read access to the given identity,\nthe `data` parameter is NOT returned in the response.\n",
+                  "example": {
+                    "name": "Example building"
+                  },
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "The name of the identity",
+                      "example": "Example building",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                },
+                "metadata": {
+                  "description": "Metadata about the app, such as when it was created/updated and who\ncreated it / updated it. NOTE: If the user doesn't have the read access to\nthe given identity, the `metadata` parameter is NOT returned in the\nresponse.\n",
+                  "example": "{\n  \"createdAt\": \"2018-12-03T14:33:44\",\n  \"createdBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n  \"updatedAt\": \"2018-12-03T14:33:44\",\n  \"updatedBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "description": "RFC3339 datetime when the identity was created",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdBy": {
+                      "description": "The user ID of the user who created this identity",
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "description": "RFC3339 datetime when the identity was updated",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedBy": {
+                      "description": "The user ID of the user who updated this identity",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "createdAt",
+                    "createdBy",
+                    "updatedAt",
+                    "updatedBy"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "data",
+                "metadata"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 403,
+                  "message": "Forbidden: You don't have '<perm>' permission on '<identity id>'"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 404,
+                  "message": "Identity not found."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 422,
+                  "message": "Could not update identity."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "schema": {
+              "example": {
+                "type": "Group",
+                "data": {
+                  "name": "Company Oy"
+                }
+              },
+              "$ref": "#/definitions/identity"
+            },
+            "in": "body",
+            "name": "body",
+            "required": true
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete an identity by id. Requires the `manage` permission on the\nidentity.\n",
+        "operationId": "DELETE_identities-v1-id",
+        "responses": {
+          "204": {
+            "description": "",
+            "schema": {
+              "example": {}
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 403,
+                  "message": "Forbidden: You don't have '<perm>' permission on '<identity id>'"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 404,
+                  "message": "Identity not found."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "Restricted identity type": {
+                  "error": {
+                    "status": 422,
+                    "message": "Could not delete identity. Try using corresponding APIs to delete this type of identities."
+                  }
+                },
+                "Links exists": {
+                  "error": {
+                    "status": 422,
+                    "message": "Could not delete identity, reason: links exist to or from the identity."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "description": "The ID of the Identity",
+          "type": "string",
+          "in": "path",
+          "name": "id",
+          "required": true
+        }
+      ]
+    },
+    "/identities/v1/{from_identity}/link/{to_identity}": {
+      "post": {
+        "description": "Creates a new link between two identities",
+        "operationId": "POST_identities-v1-from_identity-link-to_identity",
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "example": {
+                "type": "MemberOf",
+                "id": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                "from": "58dc29ab-d52e-4aab-a228-9b54e001797c",
+                "to": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                "data": {},
+                "metadata": {
+                  "createdBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "updatedBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "createdAt": "2018-02-28T16:41:41.090Z",
+                  "updatedAt": "2018-02-28T16:41:41.090Z"
+                }
+              },
+              "properties": {
+                "type": {
+                  "description": "The type of the link",
+                  "example": "MemberOf",
+                  "type": "string"
+                },
+                "from": {
+                  "description": "The from-identity ID, from where the link starts",
+                  "type": "string"
+                },
+                "to": {
+                  "description": "The to-identity ID, to where the link ends",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Additional attributes for the link.",
+                  "example": {
+                    "key": "value"
+                  },
+                  "type": "object"
+                },
+                "metadata": {
+                  "description": "Metadata about the link, such as when it was created/updated and who\ncreated it / updated it.\n",
+                  "example": "{\n  \"createdAt\": \"2018-12-03T14:33:44\",\n  \"createdBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n  \"updatedAt\": \"2018-12-03T14:33:44\",\n  \"updatedBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "description": "RFC3339 datetime when the link was created",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdBy": {
+                      "description": "The user ID of the user who created this link",
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "description": "RFC3339 datetime when the link was updated",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedBy": {
+                      "description": "The user ID of the user who updated this link",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "createdAt",
+                    "createdBy",
+                    "updatedAt",
+                    "updatedBy"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "from",
+                "to",
+                "metadata"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 403,
+                  "message": "Forbidden: You don't have '<perm>' permission on '<identity id>'"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "From identity not found": {
+                  "error": {
+                    "status": 404,
+                    "message": "From identity not found."
+                  }
+                },
+                "To identity not found": {
+                  "error": {
+                    "status": 404,
+                    "message": "To identity not found."
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 409,
+                  "message": "Could not create link. Does a link of type MemberOf already exist from 59de4a29-944e-4141-a6c9-f5d7bb7707b0 to 7a13c5f6-cf8b-4d18-9f8a-9b884bc6e817?"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 422,
+                  "message": "Could not create link."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "schema": {
+              "example": {
+                "type": "MemberOf"
+              },
+              "$ref": "#/definitions/link"
+            },
+            "in": "body",
+            "name": "body",
+            "required": true
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "description": "The starting identity ID of the link",
+          "type": "string",
+          "in": "path",
+          "name": "from_identity",
+          "required": true
+        },
+        {
+          "description": "The ending identity ID of the link",
+          "type": "string",
+          "in": "path",
+          "name": "to_identity",
+          "required": true
+        }
+      ]
+    },
+    "/identities/v1/{from_identity}/link/{to_identity}/{type}": {
+      "get": {
+        "description": "Read a link by type",
+        "operationId": "GET_identities-v1-from_identity-link-to_identity-type",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "type": "MemberOf",
+                "id": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                "from": "58dc29ab-d52e-4aab-a228-9b54e001797c",
+                "to": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                "data": {},
+                "metadata": {
+                  "createdBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "updatedBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "createdAt": "2018-02-28T16:41:41.090Z",
+                  "updatedAt": "2018-02-28T16:41:41.090Z"
+                }
+              },
+              "properties": {
+                "type": {
+                  "description": "The type of the link",
+                  "example": "MemberOf",
+                  "type": "string"
+                },
+                "from": {
+                  "description": "The from-identity ID, from where the link starts",
+                  "type": "string"
+                },
+                "to": {
+                  "description": "The to-identity ID, to where the link ends",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Additional attributes for the link.",
+                  "example": {
+                    "key": "value"
+                  },
+                  "type": "object"
+                },
+                "metadata": {
+                  "description": "Metadata about the link, such as when it was created/updated and who\ncreated it / updated it.\n",
+                  "example": "{\n  \"createdAt\": \"2018-12-03T14:33:44\",\n  \"createdBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n  \"updatedAt\": \"2018-12-03T14:33:44\",\n  \"updatedBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "description": "RFC3339 datetime when the link was created",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdBy": {
+                      "description": "The user ID of the user who created this link",
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "description": "RFC3339 datetime when the link was updated",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedBy": {
+                      "description": "The user ID of the user who updated this link",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "createdAt",
+                    "createdBy",
+                    "updatedAt",
+                    "updatedBy"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "from",
+                "to",
+                "metadata"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 404,
+                  "message": "Link not found."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          }
+        ]
+      },
+      "put": {
+        "description": "Update a link",
+        "operationId": "PUT_identities-v1-from_identity-link-to_identity-type",
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "example": {
+                "type": "MemberOf",
+                "id": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                "from": "58dc29ab-d52e-4aab-a228-9b54e001797c",
+                "to": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                "data": {},
+                "metadata": {
+                  "createdBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "updatedBy": "cf0862f6-3f4f-498f-97f1-fbe8b5734448",
+                  "createdAt": "2018-02-28T16:41:41.090Z",
+                  "updatedAt": "2018-02-28T16:41:41.090Z"
+                }
+              },
+              "properties": {
+                "type": {
+                  "description": "The type of the link",
+                  "example": "MemberOf",
+                  "type": "string"
+                },
+                "from": {
+                  "description": "The from-identity ID, from where the link starts",
+                  "type": "string"
+                },
+                "to": {
+                  "description": "The to-identity ID, to where the link ends",
+                  "type": "string"
+                },
+                "data": {
+                  "description": "Additional attributes for the link.",
+                  "example": {
+                    "key": "value"
+                  },
+                  "type": "object"
+                },
+                "metadata": {
+                  "description": "Metadata about the link, such as when it was created/updated and who\ncreated it / updated it.\n",
+                  "example": "{\n  \"createdAt\": \"2018-12-03T14:33:44\",\n  \"createdBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n  \"updatedAt\": \"2018-12-03T14:33:44\",\n  \"updatedBy\": \"747d0af5-6f06-4309-b2d5-f06677356a9a\",\n}\n",
+                  "type": "object",
+                  "properties": {
+                    "createdAt": {
+                      "description": "RFC3339 datetime when the link was created",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "createdBy": {
+                      "description": "The user ID of the user who created this link",
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "description": "RFC3339 datetime when the link was updated",
+                      "example": "2018-02-28T16:41:41.090Z",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedBy": {
+                      "description": "The user ID of the user who updated this link",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "createdAt",
+                    "createdBy",
+                    "updatedAt",
+                    "updatedBy"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "from",
+                "to",
+                "metadata"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 403,
+                  "message": "Forbidden: You don't have '<perm>' permission on '<identity id>'"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "From identity not found": {
+                  "error": {
+                    "status": 404,
+                    "message": "From identity not found."
+                  }
+                },
+                "To identity not found": {
+                  "error": {
+                    "status": 404,
+                    "message": "To identity not found."
+                  }
+                },
+                "Link not found": {
+                  "error": {
+                    "status": 404,
+                    "message": "Link of type <type> not found."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 422,
+                  "message": "Could not update link."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "body",
+            "name": "body",
+            "required": true
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete a link by type",
+        "operationId": "DELETE_identities-v1-from_identity-link-to_identity-type",
+        "responses": {
+          "204": {
+            "description": "",
+            "schema": {
+              "example": {}
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 403,
+                  "message": "Forbidden: You don't have '<perm>' permission on '<identity id>'"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "From identity not found": {
+                  "error": {
+                    "status": 404,
+                    "message": "From identity not found."
+                  }
+                },
+                "To identity not found": {
+                  "error": {
+                    "status": 404,
+                    "message": "To identity not found."
+                  }
+                },
+                "Link not found": {
+                  "error": {
+                    "status": 404,
+                    "message": "Link of type <type> not found."
+                  }
+                },
+                "ACL not found": {
+                  "error": {
+                    "status": 404,
+                    "message": "Not Found: ACL for identity '<id>' not found."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 422,
+                  "message": "Could not delete link."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "description": "The `type` of the link, for example `Link`, `Tenant` or `Owner`",
+          "type": "string",
+          "in": "path",
+          "name": "type",
+          "required": true
+        },
+        {
+          "description": "The starting identity ID of the link",
+          "type": "string",
+          "in": "path",
+          "name": "from_identity",
+          "required": true
+        },
+        {
+          "description": "The ending identity ID of the link",
+          "type": "string",
+          "in": "path",
+          "name": "to_identity",
+          "required": true
+        }
+      ]
+    },
+    "/identities/v1/{id}/links/in": {
+      "get": {
+        "description": "List incoming links. If the optional `type` GET-parameter is given, only list\nlinks by that type.\n",
+        "operationId": "GET_identities-v1-id-links-in",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "links": [
+                  {
+                    "type": "DeveloperAt",
+                    "id": "257482d1-56bf-4b5e-abf2-29014ef1eb0a",
+                    "from": "e153e200-14d5-43ce-95dc-2db22ac6767f",
+                    "to": "00ecc2fe-35fa-4f9c-83d1-a1bab31a0cff",
+                    "data": {},
+                    "metadata": {
+                      "createdAt": "2019-09-17T12:48:17+00:00",
+                      "createdBy": "7a6a7b86-4edb-4545-ac2e-edb9c11598d2",
+                      "updatedAt": "2019-09-17T12:48:17+00:00",
+                      "updatedBy": "7a6a7b86-4edb-4545-ac2e-edb9c11598d2"
+                    }
+                  },
+                  {
+                    "type": "MemberOf",
+                    "id": "257482d1-56bf-4b5e-abf2-29014ef1eb0a",
+                    "from": "e153e200-14d5-43ce-95dc-2db22ac6767f",
+                    "to": "faecc2fe-35fa-4f9c-43d1-a1bab31a0cfe",
+                    "data": {},
+                    "metadata": {
+                      "createdAt": "2019-09-17T12:48:17+00:00",
+                      "createdBy": "7a6a7b86-4edb-4545-ac2e-edb9c11598d2",
+                      "updatedAt": "2019-09-17T12:48:17+00:00",
+                      "updatedBy": "7a6a7b86-4edb-4545-ac2e-edb9c11598d2"
+                    }
+                  }
+                ],
+                "totalCount": 2
+              },
+              "properties": {
+                "links": {
+                  "description": "A list of links.",
+                  "example": "{\n  \"links\": [\n    {\n      \"type\": \"DeveloperAt\",\n      \"id\": \"257482d1-56bf-4b5e-abf2-29014ef1eb0a\",\n      \"from\": \"e153e200-14d5-43ce-95dc-2db22ac6767f\",\n      \"to\": \"00ecc2fe-35fa-4f9c-83d1-a1bab31a0cff\",\n      \"data\": {},\n      \"metadata\": {\n        \"createdAt\": \"2019-09-17T12:48:17+00:00\",\n        \"createdBy\": \"7a6a7b86-4edb-4545-ac2e-edb9c11598d2\",\n        \"updatedAt\": \"2019-09-17T12:48:17+00:00\",\n        \"updatedBy\": \"7a6a7b86-4edb-4545-ac2e-edb9c11598d2\"\n      }\n  ]\n}\n",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/link"
+                  }
+                },
+                "totalCount": {
+                  "description": "The total count of the resulting records.",
+                  "example": {
+                    "totalCount": 1
+                  },
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "links",
+                "totalCount"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 404,
+                  "message": "Identity not found."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "description": "If given to `GET /identities/{version}/{id}/links/in?type=OwnerOf`,\nwill list only the links of `type: \"OwnerOf\"`.\n",
+            "type": "string",
+            "in": "query",
+            "name": "type"
+          },
+          {
+            "description": "Limit the amount of records returned. Defaults to 100.",
+            "type": "integer",
+            "in": "query",
+            "name": "limit"
+          },
+          {
+            "description": "How many records to skip. Defaults to 0.",
+            "type": "integer",
+            "in": "query",
+            "name": "offset"
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "description": "The ID of the identity",
+          "type": "string",
+          "in": "path",
+          "name": "id",
+          "required": true
+        }
+      ]
+    },
+    "/identities/v1/{id}/links/out": {
+      "get": {
+        "description": "List outgoing links. If the optional `type` GET-parameter is given, only list\nlinks by that type.\n",
+        "operationId": "GET_identities-v1-id-links-out",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "links": [
+                  {
+                    "type": "DeveloperAt",
+                    "id": "257482d1-56bf-4b5e-abf2-29014ef1eb0a",
+                    "from": "e153e200-14d5-43ce-95dc-2db22ac6767f",
+                    "to": "00ecc2fe-35fa-4f9c-83d1-a1bab31a0cff",
+                    "data": {},
+                    "metadata": {
+                      "createdAt": "2019-09-17T12:48:17+00:00",
+                      "createdBy": "7a6a7b86-4edb-4545-ac2e-edb9c11598d2",
+                      "updatedAt": "2019-09-17T12:48:17+00:00",
+                      "updatedBy": "7a6a7b86-4edb-4545-ac2e-edb9c11598d2"
+                    }
+                  },
+                  {
+                    "type": "MemberOf",
+                    "id": "257482d1-56bf-4b5e-abf2-29014ef1eb0a",
+                    "from": "e153e200-14d5-43ce-95dc-2db22ac6767f",
+                    "to": "faecc2fe-35fa-4f9c-43d1-a1bab31a0cfe",
+                    "data": {},
+                    "metadata": {
+                      "createdAt": "2019-09-17T12:48:17+00:00",
+                      "createdBy": "7a6a7b86-4edb-4545-ac2e-edb9c11598d2",
+                      "updatedAt": "2019-09-17T12:48:17+00:00",
+                      "updatedBy": "7a6a7b86-4edb-4545-ac2e-edb9c11598d2"
+                    }
+                  }
+                ],
+                "totalCount": 2
+              },
+              "properties": {
+                "links": {
+                  "description": "A list of links.",
+                  "example": "{\n  \"links\": [\n    {\n      \"type\": \"DeveloperAt\",\n      \"id\": \"257482d1-56bf-4b5e-abf2-29014ef1eb0a\",\n      \"from\": \"e153e200-14d5-43ce-95dc-2db22ac6767f\",\n      \"to\": \"00ecc2fe-35fa-4f9c-83d1-a1bab31a0cff\",\n      \"data\": {},\n      \"metadata\": {\n        \"createdAt\": \"2019-09-17T12:48:17+00:00\",\n        \"createdBy\": \"7a6a7b86-4edb-4545-ac2e-edb9c11598d2\",\n        \"updatedAt\": \"2019-09-17T12:48:17+00:00\",\n        \"updatedBy\": \"7a6a7b86-4edb-4545-ac2e-edb9c11598d2\"\n      }\n  ]\n}\n",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/link"
+                  }
+                },
+                "totalCount": {
+                  "description": "The total count of the resulting records.",
+                  "example": {
+                    "totalCount": 1
+                  },
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "links",
+                "totalCount"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 404,
+                  "message": "Identity not found."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "description": "If given to `GET /identities/{version}/{id}/links/out?type=OwnerOf`,\nwill list only the links of `type: \"OwnerOf\"`.\n",
+            "type": "string",
+            "in": "query",
+            "name": "type"
+          },
+          {
+            "description": "Limit the amount of records returned. Defaults to 100.",
+            "type": "integer",
+            "in": "query",
+            "name": "limit"
+          },
+          {
+            "description": "How many records to skip. Defaults to 0.",
+            "type": "integer",
+            "in": "query",
+            "name": "offset"
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "description": "The ID of the identity",
+          "type": "string",
+          "in": "path",
+          "name": "id",
+          "required": true
+        }
+      ]
+    },
+    "/identities/v1/data-product/my-sources": {
+      "get": {
+        "description": "List your own data product sources.",
+        "operationId": "GET_identities-v1-data-product-my-sources",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "dataProducts": [
+                  {
+                    "id": "f4ae7c67-7e84-4f3a-a288-fa0753f640ac",
+                    "source": "DigitalLivingOpenWeatherMap",
+                    "standard": "Weather/Current/Metric",
+                    "name": "Example Productizer",
+                    "productizerUrl": "https://example.com/Weather/Current/Metric"
+                  }
+                ],
+                "totalCount": 1
+              },
+              "properties": {
+                "dataProducts": {
+                  "description": "A list of found data products and sources.",
+                  "example": [
+                    {
+                      "id": "f4ae7c67-7e84-4f3a-a288-fa0753f640ac",
+                      "source": "DigitalLivingOpenWeatherMap",
+                      "standard": "Weather/Current/Metric",
+                      "name": "Example Productizer",
+                      "productizerUrl": "https://example.com/Weather/Current/Metric"
+                    }
+                  ],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "totalCount": {
+                  "description": "Total count of found data products.",
+                  "example": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "dataProducts",
+                "totalCount"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 422,
+                  "message": "Invalid Nexus token."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          },
+          {
+            "description": "The X-Nexus-Token header, MUST be a token generated for the Nexus.\n",
+            "type": "string",
+            "in": "header",
+            "name": "X-Nexus-Token",
+            "required": true
+          },
+          {
+            "description": "Limit the amount of records returned. Defaults to 100.",
+            "type": "integer",
+            "in": "query",
+            "name": "limit"
+          },
+          {
+            "description": "How many records to skip. Defaults to 0.",
+            "type": "integer",
+            "in": "query",
+            "name": "offset"
+          }
+        ]
+      }
+    },
+    "/identities/v1/data-product/search": {
+      "post": {
+        "description": "Search data product sources connected to a Nexus.",
+        "operationId": "POST_identities-v1-data-product-search",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "dataProducts": [
+                  {
+                    "id": "f4ae7c67-7e84-4f3a-a288-fa0753f640ac",
+                    "source": "DigitalLivingOpenWeatherMap",
+                    "standard": "Weather/Current/Metric",
+                    "name": "Example Productizer",
+                    "productizerUrl": "https://example.com/Weather/Current/Metric"
+                  }
+                ],
+                "totalCount": 1
+              },
+              "properties": {
+                "dataProducts": {
+                  "description": "A list of found data products and sources.",
+                  "example": [
+                    {
+                      "id": "f4ae7c67-7e84-4f3a-a288-fa0753f640ac",
+                      "source": "DigitalLivingOpenWeatherMap",
+                      "standard": "Weather/Current/Metric",
+                      "name": "Example Productizer",
+                      "productizerUrl": "https://example.com/Weather/Current/Metric"
+                    }
+                  ],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "totalCount": {
+                  "description": "Total count of found data products.",
+                  "example": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "dataProducts",
+                "totalCount"
+              ]
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 422,
+                  "message": "Invalid Nexus token."
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The X-Nexus-Token header, MUST be a token generated for the Nexus.\n",
+            "type": "string",
+            "in": "header",
+            "name": "X-Nexus-Token",
+            "required": true
+          },
+          {
+            "schema": {
+              "example": {
+                "standard": "Weather/Current/Metric"
+              },
+              "properties": {
+                "standard": {
+                  "description": "The standard the data product(s) must conform to.",
+                  "example": "Weather/Current/Metric",
+                  "type": "string"
+                },
+                "source": {
+                  "description": "The source of the matching data product(s).",
+                  "example": "DigitalLivingOpenWeatherMap",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "standard"
+              ],
+              "type": "object"
+            },
+            "in": "body",
+            "name": "body",
+            "required": true
+          },
+          {
+            "description": "Limit the amount of records returned. Defaults to 100.",
+            "type": "integer",
+            "in": "query",
+            "name": "limit"
+          },
+          {
+            "description": "How many records to skip. Defaults to 0.",
+            "type": "integer",
+            "in": "query",
+            "name": "offset"
+          }
+        ]
+      }
+    },
+    "/identities/v1/{user_id}/is-developer-of/{identity_id}": {
+      "get": {
+        "description": "Check if a user is a developer of the given identity. This means\nthere's a MemberOf link from the Person to some intermediate identity\n(for example a Group) and from that a DeveloperOf link to the target\nidentity (for example an App or a DataProduct).\n",
+        "operationId": "GET_identities-v1-user_id-is-developer-of-identity_id",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "isDeveloperOf": true
+              },
+              "properties": {
+                "isDeveloperOf": {
+                  "description": "Whether the user/person is a developer of the identity or not.",
+                  "example": true,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "isDeveloperOf"
+              ]
+            }
+          },
+          "401": {
+            "description": "",
+            "schema": {
+              "example": {
+                "error": {
+                  "status": 401,
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "description": "The Authorization header, MUST be `Bearer {{access_token}}`",
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "required": true
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "description": "The UUID of the Person/User.",
+          "type": "string",
+          "in": "path",
+          "name": "user_id",
+          "required": true
+        },
+        {
+          "description": "The UUID of the target Identity",
+          "type": "string",
+          "in": "path",
+          "name": "identity_id",
+          "required": true
+        }
+      ]
+    }
+  }
+}
